@@ -1,0 +1,72 @@
+.navigation {
+  padding: 3rem 5rem;
+  border-bottom: 1px solid var(--gray-color);
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      @media only screen and (max-width: $bp-small) {
+        display: none;
+      }
+    }
+  }
+
+  &__mainItems {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    font-size: 3rem;
+  }
+
+  &__notification {
+    &--icon {
+      &:hover {
+        animation: rotate 0.5s infinite;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__profileIcon {
+    width: 6rem;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 5rem;
+      outline: 1px solid var(--gray-color);
+      padding: 3px;
+      transition: 0.2s all;
+      box-shadow: 0.5rem 0.5rem 1rem var(--gray-color);
+      &:hover {
+        padding: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__btn {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 2rem;
+    border: 1px solid var(--gray-color);
+    background-color: transparent;
+    border-radius: 3rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: 0.2s all;
+    :first-child {
+      font-size: 2rem;
+    }
+
+    &:hover {
+      background-color: var(--primary-color);
+      color: #ffff;
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+  }
+}

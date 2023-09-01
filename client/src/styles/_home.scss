@@ -1,0 +1,48 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / 3;
+  border-right: 1px solid var(--gray-color);
+  padding: 3rem 5rem;
+
+  &__navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5rem;
+    align-items: center;
+
+    &__input {
+      border-radius: 3rem;
+      outline: none;
+      border: 1px solid var(--gray-color);
+      padding: 1rem 1rem;
+    }
+
+    &__buttons {
+      display: flex;
+      gap: 3rem;
+
+      button {
+        padding: 1.5rem 3rem;
+        border-radius: 3rem;
+        outline: none;
+        border: none;
+        transition: 0.3s all;
+        &:hover {
+          background-color: var(--primary-color);
+          color: #ffff;
+          cursor: pointer;
+        }
+      }
+    }
+
+    p {
+      font-size: 2rem;
+      color: var(--primary-color);
+    }
+  }
+}
+
+.interest {
+  padding: 3rem 5rem;
+}
