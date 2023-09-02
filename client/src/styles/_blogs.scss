@@ -1,0 +1,147 @@
+.blog {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 0rem;
+  border-bottom: 1px solid var(--gray-color);
+  &__userImg {
+    width: 5rem;
+    transition: 0.3s all;
+    img {
+      outline: 1px solid var(--gray-color);
+      padding: 2px;
+      border-radius: 5rem;
+      width: 100%;
+      height: 100%;
+    }
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+  }
+
+  &__userInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__username {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 0.5rem;
+
+    & h3 {
+      font-weight: 300;
+      color: var(--primary-color);
+      position: relative;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        height: 1px;
+        background-color: var(--primary-color);
+        bottom: 0;
+        width: 0;
+        transition: width 0.3s ease;
+      }
+
+      &:hover::before {
+        width: 100%;
+      }
+    }
+
+    & p {
+      color: var(--secondary-color) !important;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .dot {
+      color: var(--gray-color);
+    }
+  }
+
+  &__userDesc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    & p {
+      color: var(--gray-color);
+    }
+  }
+
+  &__blogInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__heading {
+      color: var(--primary-color);
+      font-size: 2.5rem;
+      line-height: 3.2rem;
+      text-decoration: none;
+      transition: .3s all;
+
+      &:hover {
+        color: var(--secondary-color);
+      }
+    }
+    &__desc {
+      width: 70%;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+
+      & p {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: var(--gray-color);
+      }
+    }
+
+    &__image {
+      height: 20rem;
+      overflow: hidden;
+      border-radius: 3rem;
+      position: relative;
+      transition: 0.2s all;
+
+      .icon {
+        display: none;
+        color: white;
+        font-size: 5rem;
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: dropTop 0.5s ease-in-out;
+      }
+
+      &:hover .icon {
+        display: block;
+        cursor: pointer;
+      }
+
+      img {
+        height: 100%;
+        width: 100%;
+        border-radius: 2rem;
+        filter: grayscale(1);
+        transition: 0.5s all;
+      }
+      &:hover img {
+        transform: scale(1.1);
+        filter: blur(2px) grayscale(0);
+        cursor: pointer;
+      }
+    }
+  }
+}

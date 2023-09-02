@@ -5,21 +5,41 @@
   border-right: 1px solid var(--gray-color);
   padding: 3rem 5rem;
 
+  @media only screen and (max-width: $bp-small) {
+    grid-column: 1/4;
+  }
+  
   &__navigation {
     display: flex;
-    flex-wrap: wrap;
-    gap: 5rem;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+
+    &__sortBy {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+    }
 
     &__input {
+      width: 40rem;
       border-radius: 3rem;
       outline: none;
       border: 1px solid var(--gray-color);
       padding: 1rem 1rem;
+
+      @media only screen and (max-width: $bp-largest) {
+        width: 100%;
+      }
     }
 
     &__buttons {
       display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
       gap: 3rem;
 
       button {
@@ -28,6 +48,11 @@
         outline: none;
         border: none;
         transition: 0.3s all;
+
+        @media only screen and (max-width: $bp-largest) {
+          padding: 1rem 1.5rem;
+        }
+
         &:hover {
           background-color: var(--primary-color);
           color: #ffff;
@@ -39,6 +64,10 @@
     p {
       font-size: 2rem;
       color: var(--primary-color);
+
+      @media only screen and (max-width: $bp-large) {
+        display: none;
+      }
     }
   }
 }
