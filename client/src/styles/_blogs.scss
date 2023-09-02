@@ -4,7 +4,7 @@
   padding: 3rem 0rem;
   border-bottom: 1px solid var(--gray-color);
   &__userImg {
-    width: 5rem;
+    max-width: 5rem;
     transition: 0.3s all;
     img {
       outline: 1px solid var(--gray-color);
@@ -66,6 +66,10 @@
     .dot {
       color: var(--gray-color);
     }
+
+    @media only screen and (max-width: $bp-smallest-small) {
+        font-size: 1.3rem;
+    }
   }
 
   &__userDesc {
@@ -74,6 +78,11 @@
     justify-content: center;
     & p {
       color: var(--gray-color);
+
+      
+    @media only screen and (max-width: $bp-small) {
+        font-size: 1.3rem;
+    }
     }
   }
 
@@ -81,6 +90,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    
+    @media only screen and (max-width: $bp-medium) {
+       flex-direction: column;
+       align-items: stretch;
+       gap: 3rem;
+  }
+
     &__heading {
       color: var(--primary-color);
       font-size: 2.5rem;
@@ -91,6 +107,17 @@
       &:hover {
         color: var(--secondary-color);
       }
+
+      @media only screen and (max-width: $bp-medium) {
+        margin-top: 3rem;
+    }
+
+
+    @media only screen and (max-width: $bp-small) {
+        font-size: 2rem;
+    }
+
+ 
     }
     &__desc {
       width: 70%;
@@ -104,6 +131,11 @@
         text-overflow: ellipsis;
         color: var(--gray-color);
       }
+
+      @media only screen and (max-width: $bp-medium) {
+        width: 100%;
+    }
+ 
     }
 
     &__image {
