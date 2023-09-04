@@ -1,5 +1,4 @@
 import image from "../../images/dummyProfileImg.jpg"
-import image2 from "../../images/laptopImg.jpg"
 
 const ReadingList = () => {
   return (
