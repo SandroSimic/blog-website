@@ -22,3 +22,13 @@
     border: none;
   }
 }
+
+.userInterest-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userInterested-section__people {
+  margin-top: 5rem;
+}

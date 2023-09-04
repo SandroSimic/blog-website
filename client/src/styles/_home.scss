@@ -5,7 +5,7 @@
   border-right: 1px solid var(--gray-color);
   padding: 3rem 5rem;
 
-  @media only screen and (max-width: $bp-small) {
+  @media only screen and (max-width: $bp-medium-small) {
     grid-column: 1/4;
   }
   
@@ -74,4 +74,8 @@
 
 .interest {
   padding: 3rem 5rem;
+
+  @media only screen and (max-width: $bp-medium-small) {
+    grid-column: 1/4;
+  }
 }
