@@ -2,12 +2,15 @@ import { HiOutlineBell } from "react-icons/hi"
 import { BiEdit } from "react-icons/Bi"
 
 import image from "../../images/dummyProfileImg.jpg"
+import { Link } from "react-router-dom"
 
 const Navbar = () => {
   return (
     <nav className="navigation">
       <div className="navigation__items">
-        <h1>READER</h1>
+        <h1>
+          <Link to={'/blogs'}>READER</Link>
+        </h1>
         <div className="navigation__mainItems">
           <div className="navigation__notification">
             <HiOutlineBell className="navigation__notification--icon" />

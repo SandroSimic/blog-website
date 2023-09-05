@@ -10,6 +10,11 @@
       @media only screen and (max-width: $bp-small) {
         display: none;
       }
+
+      a {
+        text-decoration: none;
+        color: var(--primary-color);
+      }
     }
   }
 

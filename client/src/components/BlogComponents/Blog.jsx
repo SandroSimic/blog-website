@@ -4,7 +4,7 @@ import { AiFillRead } from "react-icons/ai"
 import { Link } from "react-router-dom"
 
 // eslint-disable-next-line react/prop-types
-const Blog = ({ blogImage, dateOfCreation, title, content }) => {
+const Blog = ({ id,blogImage, dateOfCreation, title, content }) => {
   return (
     <div className="blog">
       <div className="blog__userInfo">
@@ -22,7 +22,7 @@ const Blog = ({ blogImage, dateOfCreation, title, content }) => {
       </div>
       <div className="blog__blogInfo">
         <div className="blog__blogInfo__desc">
-          <Link className="blog__blogInfo__heading">{title}</Link>
+          <Link className="blog__blogInfo__heading" to={`/blog/${id}`}>{title}</Link>
           <p>{content}</p>
         </div>
         <div className="blog__blogInfo__image">
