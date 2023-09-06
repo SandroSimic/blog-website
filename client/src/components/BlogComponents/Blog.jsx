@@ -4,7 +4,7 @@ import { AiFillRead } from "react-icons/ai"
 import { Link } from "react-router-dom"
 
 // eslint-disable-next-line react/prop-types
-const Blog = ({ id,blogImage, dateOfCreation, title, content }) => {
+const Blog = ({ id, blogImage, dateOfCreation, title, content }) => {
   return (
     <div className="blog">
       <div className="blog__userInfo">
@@ -26,8 +26,10 @@ const Blog = ({ id,blogImage, dateOfCreation, title, content }) => {
           <p>{content}</p>
         </div>
         <div className="blog__blogInfo__image">
-          <AiFillRead className="icon" />
-          <img src={blogImage} alt={title} />
+          <Link to={`/blog/${id}`}>
+            <AiFillRead className="icon" />
+            <img src={blogImage} alt={title} />
+          </Link>
         </div>
       </div>
     </div>

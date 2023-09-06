@@ -13,7 +13,19 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // Add creator and comments
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    comments: [
+      {
+        comment: String,
+        author: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User'
+        }
+      }
+    ]
   },
   {
     timestamps: true,

@@ -1,0 +1,116 @@
+.blogDetail {
+    
+
+    &__heading {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    &__title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 200;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        gap: 2rem;
+
+        button {
+            padding: 1.3rem;
+            font-size: 2.5rem;
+            border-radius: 2rem;
+            border: 1px solid var(--gray-color);
+            display: flex;
+            background-color: transparent;
+            align-items: center;
+            justify-content: center;
+            transition: .2s all;
+            &:hover{
+                cursor: pointer;
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    &__info {
+        display: flex;
+        align-items: center;
+        gap: 5rem;
+
+        &--text {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            font-size: 2rem;
+
+            span {
+                font-weight: 200;
+            }
+        }
+    }
+
+    &__content {
+        font-size: 2.5rem;
+        line-height: 3.5rem;
+        color: var(--primary-color);
+    }
+
+    &__commentBox {
+        margin-top: 5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+
+
+    }
+    
+    &__comment {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        border: 1px solid var(--gray-color);
+        padding: 3rem;
+        border-radius: 1.5rem;
+
+        &--userInfo {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+    }
+
+    &__commentForm {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+
+       & input {
+        padding: 1.5rem 3rem;
+        font-size: 2rem;
+        border-radius: 1.5rem;
+        border: 1px solid black;
+        }
+
+       & button {
+            align-self: flex-end;
+            padding: 2rem;
+            font-size: 2rem;
+            border-radius: 1.5rem;
+            background-color: transparent;
+            border: 1px solid var(--gray-color);
+            transition: .2s all;
+            &:hover{
+                cursor: pointer;
+                background-color: var(--primary-color);
+                color: #ffff;
+            }
+        }
+    }
+}
