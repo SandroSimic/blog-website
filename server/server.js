@@ -6,6 +6,7 @@ import blogRouter from "./routes/blogsRoute.js"
 import userRouter from "./routes/usersRoute.js"
 import connectDB from "./data/config/connectDB.js"
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js"
+import cookieParser from "cookie-parser"
 dotenv.config()
 
 connectDB()
@@ -15,6 +16,8 @@ const app = express()
 //Body parser middleware
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+app.use(cookieParser())
 
 app.use(cors())
 app.use(morgan("dev"))
