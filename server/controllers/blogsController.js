@@ -24,7 +24,9 @@ export const getBlogById = asyncHandler(async (req, res) => {
 
 export const createBlog = asyncHandler(async (req, res) => {
   const { title, content, image } = req.body
-  const blog = new Blog({ title, content, image })
+  const creator = req.user.userId
+  const blog = new Blog({ title, content, image, creator })
+
   if (blog) {
     const createdBlog = await blog.save()
 

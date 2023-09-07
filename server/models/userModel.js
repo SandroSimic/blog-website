@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema(
         },
         image: {
             type: String,
-            default: "https://ronaldmottram.co.nz/wp-content/uploads/2019/01/default-user-icon-8.jpg"
+            default: "https://icon-library.com/images/default-user-icon/default-user-icon-20.jpg"
         }
     },
     {
@@ -43,6 +43,7 @@ const userSchema = new mongoose.Schema(
 )
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
+    console.log(enteredPassword, this.password)
     return await bcrypt.compare(enteredPassword, this.password)
 }
 

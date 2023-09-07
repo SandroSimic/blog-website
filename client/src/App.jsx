@@ -15,10 +15,10 @@ const router = createBrowserRouter([
       {path: '/blogs', element: <HomePage />},
       { path: "/blog/:id", element: <BlogDetailPage /> },
       { path: "/profile", element: <ProfilePage /> },
-      { path: "/login", element: <LoginPage /> },
-      { path: "/register", element: <RegisterPage /> },
     ],
   },
+  { path: "/login", element: <LoginPage /> },
+  { path: "/register", element: <RegisterPage /> },
 ])
 
 function App() {

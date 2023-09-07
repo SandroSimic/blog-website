@@ -74,4 +74,13 @@
       cursor: pointer;
     }
   }
+
+  &__buttons {
+    display: flex;
+    gap: 2.5rem;
+
+    a{
+      text-decoration: none;
+    }
+  }
 }

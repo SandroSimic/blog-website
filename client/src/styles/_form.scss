@@ -1,0 +1,81 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: rgb(223, 238, 255);
+    background: linear-gradient(180deg, rgb(237, 237, 237) 0%, rgb(252, 253, 254) 100%);
+    position: relative;
+}
+
+
+.form {
+    display: flex;
+    flex-direction: column;
+
+    .disable {
+        padding: 1rem 2rem;
+        align-self: flex-end;
+        font-size: 1.6rem;
+        border-radius: 1.3rem;
+        border: 1px solid var(--gray-color);
+        background-color: #ffff;
+        transition: .2s all;
+
+        &:hover {
+            cursor: not-allowed;
+        }
+    }
+
+    .button {
+        padding: 1rem 2rem;
+        align-self: flex-end;
+        font-size: 1.6rem;
+        border-radius: 1.3rem;
+        border: 1px solid var(--gray-color);
+        background-color: #ffff;
+        transition: .2s all;
+
+        &:hover {
+            background-color: var(--primary-color);
+            color: #ffff;
+            cursor: pointer;
+        }
+    }
+
+    & p {
+        font-size: 1.8rem;
+    }
+}
+
+.formRow {
+    display: flex;
+    flex-direction: column;
+
+
+
+
+    & label {
+        margin-top: 5rem;
+        font-size: 2.5rem;
+        font-weight: 300;
+    }
+
+    & input {
+        margin-top: 2rem;
+        width: 40rem;
+        height: 5rem;
+        padding: 1rem;
+        border-radius: 1.5rem;
+        border: 1px solid var(--gray-color);
+    }
+
+    &__action {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: center;
+        margin-top: 3rem;
+        gap: 3rem;
+    }
+}
