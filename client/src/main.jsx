@@ -8,10 +8,12 @@ import "react-toastify/dist/ReactToastify.css"
 import { UserContextProvider } from "./context/UserContext.jsx"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-<UserContextProvider>
-  <BlogContextProvider>
-    <App />
-    <ToastContainer position="top-center" autoClose={1000} />
-  </BlogContextProvider>
-</UserContextProvider>
+  <React.StrictMode>
+    <UserContextProvider>
+      <BlogContextProvider>
+        <App />
+        <ToastContainer position="top-center" autoClose={1000} />
+      </BlogContextProvider>
+    </UserContextProvider>
+  </React.StrictMode>
 )

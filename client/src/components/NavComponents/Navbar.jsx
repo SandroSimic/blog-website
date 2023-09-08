@@ -11,7 +11,7 @@ const Navbar = () => {
     <nav className="navigation">
       <div className="navigation__items">
         <h1>
-          <Link to={'/blogs'}>READER</Link>
+          <Link to={'/'}>READER</Link>
         </h1>
         {user ? <div className="navigation__mainItems">
           <div className="navigation__notification">
