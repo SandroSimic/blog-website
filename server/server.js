@@ -7,13 +7,13 @@ import blogRouter from "./routes/blogsRoute.js"
 import userRouter from "./routes/usersRoute.js"
 import connectDB from "./data/config/connectDB.js"
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js"
-import { checkUser } from './middleware/authMiddleware.js'
 dotenv.config()
 
 connectDB()
 
 const app = express()
 app.use(cookieParser())
+
 
 app.use(cors({ credentials: true, origin: 'http://127.0.0.1:5173' }))
 app.use(express.json())

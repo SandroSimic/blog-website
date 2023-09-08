@@ -8,31 +8,43 @@ const Blogs = () => {
   const { blogData, fetchAllBlogs, isLoading } = useBlogContext()
 
   useEffect(() => {
-    fetchAllBlogs()
+    const fetchBlogs = async () => {
+      await fetchAllBlogs()
+    }
+    fetchBlogs()
   }, [])
 
-  if (isLoading) {
-    return <p>Loading...</p>
+
+
+
+  if (blogData.length === 0) {
+    return <p className="emptyBlog">No Blogs Found! Be the first to create a blog!</p>
   }
 
-  if (!Array.isArray(blogData)) {
-    return <p>No blog data available.</p>;
+  if (isLoading) {
+    return <p className="loading">Loading</p>
   }
+
 
   return (
     <section className="blogs-section">
       <h3 className="heading3">Articles</h3>
       <hr className="line" />
-      {blogData.map((blog) => (
-        <Blog
-          key={blog._id}
-          id={blog._id}
-          title={blog.title}
-          blogImage={blog.image}
-          dateOfCreation={moment().format("MMMM Do YYYY", blog.createdAt)}
-          content={blog.content}
-        />
-      ))}
+      {blogData && blogData.length > 0 ? (
+        blogData.map((blog) => (
+          <Blog
+            key={blog._id}
+            id={blog._id}
+            title={blog.title}
+            blogImage={blog.image}
+            dateOfCreation={moment().format("MMMM Do YYYY", blog.createdAt)}
+            content={blog.content}
+            creator={blog.creator}
+          />
+        ))
+      ) : (
+        <p className="emptyBlog">No Blogs Found! Be the first to create a blog!</p>
+      )}
     </section>
   )
 }

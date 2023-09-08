@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useUserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 const LoginPage = () => {
 
   const { loginUser, user } = useUserContext()
@@ -33,7 +33,7 @@ const LoginPage = () => {
       <form className="form" onSubmit={handleSubmit}>
         <div className="formRow">
           <label htmlFor='email'>*Email: </label>
-          <input id='email' name='email' type="email" placeholder="example@gmail.com" onChange={(e) => setEmail(e.target.value)} />
+          <input id='email' name='email' type="email" placeholder="example@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="formRow">
           <label htmlFor='password'>*Password: </label>

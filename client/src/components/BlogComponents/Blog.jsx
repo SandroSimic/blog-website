@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import image from "../../images/dummyProfileImg.jpg"
 import { BsDot } from "react-icons/bs"
 import { AiFillRead } from "react-icons/ai"
 import { Link } from "react-router-dom"
 
 // eslint-disable-next-line react/prop-types
-const Blog = ({ id, blogImage, dateOfCreation, title, content }) => {
+const Blog = ({ id, blogImage, dateOfCreation, title, content, creator }) => {
   return (
     <div className="blog">
       <div className="blog__userInfo">
@@ -13,7 +14,7 @@ const Blog = ({ id, blogImage, dateOfCreation, title, content }) => {
         </div>
         <div className="blog__userDesc">
           <div className="blog__username">
-            <h3>User Name</h3>
+            <h3>{creator.username}</h3>
             <BsDot className="dot" />
             <p>{dateOfCreation}</p>
           </div>

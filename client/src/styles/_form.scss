@@ -12,6 +12,7 @@
 .form {
     display: flex;
     flex-direction: column;
+    padding: 2rem 10rem;
 
     .disable {
         padding: 1rem 2rem;
@@ -51,23 +52,35 @@
 .formRow {
     display: flex;
     flex-direction: column;
-
-
+    width: 100%;
+   
 
 
     & label {
-        margin-top: 5rem;
         font-size: 2.5rem;
         font-weight: 300;
+        margin-top: 3rem;
     }
 
     & input {
         margin-top: 2rem;
-        width: 40rem;
         height: 5rem;
         padding: 1rem;
         border-radius: 1.5rem;
         border: 1px solid var(--gray-color);
+    }
+
+    & textarea[name="content"] {
+        margin-top: 2rem;
+        height: 30rem;
+        padding: 1rem;
+        font-size: 1.6rem;
+        border-radius: 2rem;
+        resize: none;
+    }
+
+    & input[name="image"] {
+       margin-bottom: 3rem;
     }
 
     &__action {

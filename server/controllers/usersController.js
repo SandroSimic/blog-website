@@ -38,10 +38,14 @@ export const loginUser = asyncHandler(async (req, res) => {
     if (user) {
         const auth = await bcrypt.compare(password, user.password)
         if (auth) {
-            const token = createToken(user._id)
+            const token = await createToken(user._id)
+
+
+
             res.cookie('authToken', token, {
                 httpOnly: true, maxAge: 1000 * 60 * 60 * 24, secure: true,
-                sameSite: 'Strict',
+                sameSite: 'None',
+                
             },)
 
             console.log('Token: ', token)
@@ -58,9 +62,9 @@ export const loginUser = asyncHandler(async (req, res) => {
 })
 
 export const logoutUser = asyncHandler(async (req, res) => {
-    res.cookie("authToken", "", {
-        httpOnly: true,
-        expires: new Date(0)
+    res.clearCookie("authToken", {
+        httpOnly: true, maxAge: new Date(0), secure: true,
+        sameSite: 'None',
     })
 
     res.status(200).json({

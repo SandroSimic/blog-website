@@ -27,7 +27,7 @@ const userReducer = (state, action) => {
         case "REGISTER_USER":
             return { ...state, user: action.payload, isLoading: false }
         case "LOGOUT_USER":
-            return { ...state, user: action.payload, isLoading: false }
+            return { ...state, user: "", isLoading: false }
         default:
             return state
     }
@@ -91,7 +91,6 @@ export const UserContextProvider = ({ children }) => {
             const data = await response.json()
             console.log(data)
 
-            // Store user data in local storage
             localStorage.setItem("user", JSON.stringify(data));
             dispatch({ type: "LOGIN_USER", payload: data })
         } catch (error) {
@@ -99,12 +98,27 @@ export const UserContextProvider = ({ children }) => {
         }
     }
 
-    const logoutUser = () => {
+    const logoutUser = async () => {
+
         // Clear user data from local storage
         localStorage.removeItem("user");
 
+        const response = await fetch(`${baseUrl}/users/logout`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: 'include'
+        })
 
-        dispatch({ type: "LOGOUT_USER", payload: "" })
+        if (response.ok) {
+            console.log('Logged out successfully')
+        } else {
+            console.log('Logout failed')
+        }
+        
+        localStorage.removeItem("user");
+        dispatch({ type: "LOGOUT_USER" })
     }
 
 

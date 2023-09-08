@@ -12,9 +12,11 @@ const blogSchema = new mongoose.Schema(
     image: {
       type: String,
       required: true,
+      default: "https://via.placeholder.com/400x300"
     },
     creator: {
       type: mongoose.Schema.Types.ObjectId,
+      required: true,
       ref: 'User'
     },
     comments: [

@@ -2,7 +2,7 @@ import Blog from "../models/blogModel.js"
 import asyncHandler from "../middleware/asyncHandler.js"
 
 export const getAllBlogs = asyncHandler(async (req, res) => {
-  const blogs = await Blog.find()
+  const blogs = await Blog.find().populate('creator', 'username')
 
   if (blogs.length === 0) {
     res.status(404).send("No Blogs found")
@@ -24,17 +24,20 @@ export const getBlogById = asyncHandler(async (req, res) => {
 
 export const createBlog = asyncHandler(async (req, res) => {
   const { title, content, image } = req.body
-  const creator = req.user.userId
-  const blog = new Blog({ title, content, image, creator })
+  const blog = new Blog({ title, content, image, creator: req.user._id })
 
-  if (blog) {
-    const createdBlog = await blog.save()
-
-    res.status(202).send(createdBlog)
-  } else {
-    res.status(500)
-    throw new Error("Something went")
+  try {
+    const createdBlog = await blog.save();
+    res.status(201).json(createdBlog);
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      res.status(400).json({ message: 'Validation failed', errors: error.errors });
+    } else {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
   }
+
 })
 
 export const updateBlog = (req, res) => {

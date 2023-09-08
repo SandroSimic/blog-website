@@ -5,6 +5,7 @@ import BlogDetailPage from "./pages/BlogDetailPage"
 import ProfilePage from "./pages/ProfilePage"
 import LoginPage from "./pages/LoginPage"
 import RegisterPage from "./pages/RegisterPage"
+import NewBlogForm from "./pages/NewBlogForm"
 
 const router = createBrowserRouter([
   {
@@ -12,9 +13,10 @@ const router = createBrowserRouter([
     element: <LayoutPage />,
     children: [
       { index: true, element: <HomePage /> },
-      {path: '/blogs', element: <HomePage />},
+      { path: '/blogs', element: <HomePage /> },
       { path: "/blog/:id", element: <BlogDetailPage /> },
       { path: "/profile", element: <ProfilePage /> },
+      { path: "/new-blog", element: <NewBlogForm /> },
     ],
   },
   { path: "/login", element: <LoginPage /> },
