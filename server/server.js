@@ -1,5 +1,5 @@
 import express from "express"
-import cookieParser from 'cookie-parser'
+import cookieParser from "cookie-parser"
 import cors from "cors"
 import morgan from "morgan"
 import dotenv from "dotenv"
@@ -7,6 +7,7 @@ import blogRouter from "./routes/blogsRoute.js"
 import userRouter from "./routes/usersRoute.js"
 import connectDB from "./data/config/connectDB.js"
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js"
+import { checkUser } from './middleware/authMiddleware.js'
 dotenv.config()
 
 connectDB()

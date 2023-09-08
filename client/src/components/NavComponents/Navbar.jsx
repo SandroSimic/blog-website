@@ -11,16 +11,16 @@ const Navbar = () => {
     <nav className="navigation">
       <div className="navigation__items">
         <h1>
-          <Link to={'/blogs'}>READER</Link>
+          <Link to={'/blogs'}>{user ? user.username : "READER"}</Link>
         </h1>
-        {user && <div className="navigation__mainItems">
+        {user ? <div className="navigation__mainItems">
           <div className="navigation__notification">
             <HiOutlineBell className="navigation__notification--icon" />
           </div>
           <div className="navigation__profileIcon">
-            <img src={user.user.image} alt={user.user.username} />
+            <img src={user.image} alt={user.username} />
           </div>
-        </div>}
+        </div> : ''}
 
         <div className="navigation__buttons">
           {user &&

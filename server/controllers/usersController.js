@@ -2,22 +2,19 @@ import User from "../models/userModel.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcryptjs'
+import { createToken } from "../utils/tokenUtils.js";
+
+const maxAge = 3 * 24 * 60 * 60
 
 export const registerUser = asyncHandler(async (req, res) => {
 
     const { username, email, password, image } = req.body
 
-
-    const userExists = await User.findOne({ email })
-
-    if (userExists) {
-        res.status(400)
-        throw new Error('User already exists')
-    }
-
     const user = await User.create({
         username, email, password, image
     })
+    const token = createToken(user._id)
+    res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 })
 
     if (user) {
         res.status(201).json({
@@ -38,19 +35,30 @@ export const loginUser = asyncHandler(async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    if (user && (await user.matchPassword(password))) {
-        res.json({ user })
+    if (user) {
+        const auth = await bcrypt.compare(password, user.password)
+        if (auth) {
+            const token = createToken(user._id)
+            res.cookie('authToken', token, {
+                httpOnly: true, maxAge: 1000 * 60 * 60 * 24, secure: true,
+                sameSite: 'Strict',
+            },)
+
+            console.log('Token: ', token)
+            console.log('Cookies: ', req.cookies.authToken)
+            res.json(user)
+        } else {
+            throw Error('Incorrect password')
+        }
     } else {
         res.status(401).json({
             message: "Invalid email or password"
         })
     }
-
-
 })
 
 export const logoutUser = asyncHandler(async (req, res) => {
-    res.cookie("jwt", "", {
+    res.cookie("authToken", "", {
         httpOnly: true,
         expires: new Date(0)
     })

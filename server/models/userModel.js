@@ -14,18 +14,21 @@ const userSchema = new mongoose.Schema(
         },
         email: {
             type: String,
-            required: true,
-            validate: [validator.isEmail, "Invalid email address"]
+            required: [true, 'Email is required'],
+            unique: [true, 'Email is already taken'],
+            lowercase: true,
+            validate: [validator.isEmail, "Please enter a valid email address"]
         },
         password: {
             type: String,
             minLength: [6, 'Password must be at least 6 characters long'],
+            required: [true, 'Password is required'],
             validate: {
                 validator: function (value) {
                     return /^[A-Z]/.test(value);
                 },
                 message: "Password must start with an uppercase letter"
-            }
+            },
         },
         role: {
             type: String,
@@ -42,10 +45,7 @@ const userSchema = new mongoose.Schema(
     }
 )
 
-userSchema.methods.matchPassword = async function (enteredPassword) {
-    console.log(enteredPassword, this.password)
-    return await bcrypt.compare(enteredPassword, this.password)
-}
+
 
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
