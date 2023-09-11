@@ -1,31 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useBlogContext } from '../context/BlogContext'
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai'
 import { BsFillBookmarkFill, BsBookmark } from 'react-icons/bs'
 import moment from 'moment'
+
 const BlogDetailPage = () => {
-
-
-
   const { id: blogId } = useParams()
   const { fetchSingleBlog, isLoading, blogData } = useBlogContext()
-  const [blog, setBlog] = useState('')
 
   useEffect(() => {
     if (blogId) {
-      fetchSingleBlog(blogId).then((blogs) => setBlog(blogs)).catch((error) => console.error(error))
+      fetchSingleBlog(blogId)
     }
   }, [])
-
 
   if (isLoading) {
     return <p>Loading...</p>
   }
 
-  if (!blog && blogData.length === 0) {
-    return <p>Blog not found</p>
-  }
+
+  // Access the creator's username if it exists
+  const creatorUsername = blogData?.creator?.username || 'Unknown'
 
   return (
     <section className='blogDetail-section'>
@@ -39,10 +35,12 @@ const BlogDetailPage = () => {
             </div>
           </div>
           <div className='blogDetail__info'>
-            <img src={blogData.image} alt={blogData.title} />
+            <div className='blogDetail__info__imgDiv'>
+              <img src={`http://localhost:8000/${blogData.image}`} alt={blogData.title} />
+            </div>
             <div className='blogDetail__info--text'>
-              <h3><span>Creator:</span> YourName</h3>
-              <h3><span>Date of Creation:</span> {moment().format("MMMM Do YYYY", blogData.createdAt)}</h3>
+              <h3><span>Creator:</span> {creatorUsername}</h3>
+              <h3><span>Date of Creation:</span> {moment(blogData.createdAt).format("MMMM Do YYYY")}</h3>
             </div>
           </div>
           <div className='blogDetail__content'>
@@ -74,4 +72,5 @@ const BlogDetailPage = () => {
     </section>
   )
 }
+
 export default BlogDetailPage

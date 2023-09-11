@@ -6,6 +6,8 @@ import { Link } from "react-router-dom"
 
 // eslint-disable-next-line react/prop-types
 const Blog = ({ id, blogImage, dateOfCreation, title, content, creator }) => {
+  const imageUrl = `http://localhost:8000/${blogImage}`;
+  console.log(imageUrl)
   return (
     <div className="blog">
       <div className="blog__userInfo">
@@ -29,7 +31,7 @@ const Blog = ({ id, blogImage, dateOfCreation, title, content, creator }) => {
         <div className="blog__blogInfo__image">
           <Link to={`/blog/${id}`}>
             <AiFillRead className="icon" />
-            <img src={blogImage} alt={title} />
+            <img src={imageUrl} alt={title} />
           </Link>
         </div>
       </div>

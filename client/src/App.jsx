@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LayoutPage from "./pages/LayoutPage";
 import HomePage from "./pages/HomePage";

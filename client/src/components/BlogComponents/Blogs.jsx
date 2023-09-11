@@ -6,7 +6,7 @@ import { useEffect } from "react"
 const Blogs = () => {
 
   const { blogData, fetchAllBlogs, isLoading } = useBlogContext()
-
+  console.log(blogData)
   useEffect(() => {
     const fetchBlogs = async () => {
       await fetchAllBlogs()

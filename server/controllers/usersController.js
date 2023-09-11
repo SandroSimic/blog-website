@@ -48,8 +48,6 @@ export const loginUser = asyncHandler(async (req, res) => {
                 
             },)
 
-            console.log('Token: ', token)
-            console.log('Cookies: ', req.cookies.authToken)
             res.json(user)
         } else {
             throw Error('Incorrect password')

@@ -4,6 +4,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react"
 import { baseUrl } from "../helpers/constants"
 import { toast } from 'react-toastify'
+import axios from 'axios'
 
 const BlogContext = createContext()
 // Custom hook for access to blog context
@@ -37,63 +38,58 @@ export const BlogContextProvider = ({ children }) => {
 
   const fetchAllBlogs = async () => {
     try {
-      const response = await fetch(`${baseUrl}/blogs`)
+      const response = await axios.get(`${baseUrl}/blogs`);
+      const data = response.data;
 
-      if (response.status === 404) {
-        toast.error('No Blogs Found! Create One')
+      if (data.length === 0) {
+        toast.error('No Blogs Found! Create One');
+        return;
       }
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch blog data")
-      }
-
-
-      const data = await response.json()
-      dispatch({ type: "FETCH_ALL_BLOGS", payload: data })
+      dispatch({ type: "FETCH_ALL_BLOGS", payload: data });
     } catch (error) {
-      console.error("Error fetching blog data: ", error)
+      console.error("Error fetching blog data: ", error);
     }
   }
 
   const fetchSingleBlog = async (blogId) => {
     try {
-      const response = await fetch(`${baseUrl}/blogs/${blogId}`)
+      const response = await axios.get(`${baseUrl}/blogs/${blogId}`)
       console.log(response)
-      if (!response.ok) {
-        throw new Error("Failed to fetch blog data")
-      }
-      const data = await response.json()
+      const data = response.data
+      console.log(data)
       dispatch({ type: "FETCH_SINGLE_BLOG", payload: data })
     } catch (error) {
       console.error("Error fetching blog data: ", error)
     }
   }
 
-  const createBlog = async (title, content, image) => {
+  const createBlog = async (formData) => {
 
     try {
-      const response = await fetch(`${baseUrl}/blogs`, {
-        method: 'POST',
+
+
+      const response = await axios.post(`${baseUrl}/blogs`, formData, {
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "multipart/form-data"
         },
-        body: JSON.stringify({
-          title, content, image
-        }),
-        credentials: 'include'
+        withCredentials: true
       })
 
 
-      if (!response.ok) {
-        toast.error('An error occurred while creating the blog.');
-      }
+      if (response.status === 201) {
+        toast.success("Blog Created Successfully");
 
-      const data = await response.json()
-      toast.success('Blog Created Successfully');
+        fetchAllBlogs();
+      } else {
+        console.error("Failed to create blog:", response);
+        toast.error("An error occurred while creating the blog.");
+      }
+    console.log(formData)
+
     } catch (error) {
       console.error(error.message);
       toast.error('An error occurred while creating the blog.');
-      return null;
     }
   }
 
