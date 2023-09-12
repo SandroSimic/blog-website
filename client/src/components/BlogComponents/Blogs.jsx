@@ -2,11 +2,11 @@ import moment from "moment"
 import Blog from "./Blog"
 import { useBlogContext } from "../../context/BlogContext"
 import { useEffect } from "react"
+import Spinner from "../Spinner"
 
 const Blogs = () => {
 
   const { blogData, fetchAllBlogs, isLoading } = useBlogContext()
-  console.log(blogData)
   useEffect(() => {
     const fetchBlogs = async () => {
       await fetchAllBlogs()
@@ -15,15 +15,15 @@ const Blogs = () => {
   }, [])
 
 
+  if (isLoading) {
+    return <Spinner />
+  }
 
 
-  if (blogData.length === 0) {
+  if (blogData.length < 1) {
     return <p className="emptyBlog">No Blogs Found! Be the first to create a blog!</p>
   }
 
-  if (isLoading) {
-    return <p className="loading">Loading</p>
-  }
 
 
   return (
@@ -37,7 +37,7 @@ const Blogs = () => {
             id={blog._id}
             title={blog.title}
             blogImage={blog.image}
-            dateOfCreation={moment().format("MMMM Do YYYY", blog.createdAt)}
+            dateOfCreation={moment(blog.createdAt).format("MMMM Do YYYY")}
             content={blog.content}
             creator={blog.creator}
           />

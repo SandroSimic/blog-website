@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useBlogContext } from '../context/BlogContext'
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai'
 import { BsFillBookmarkFill, BsBookmark } from 'react-icons/bs'
+import Spinner from './../components/Spinner'
 import moment from 'moment'
 
 const BlogDetailPage = () => {
@@ -10,13 +11,17 @@ const BlogDetailPage = () => {
   const { fetchSingleBlog, isLoading, blogData } = useBlogContext()
 
   useEffect(() => {
-    if (blogId) {
-      fetchSingleBlog(blogId)
+
+    const fetchBlog = async () => {
+      if (blogId) {
+        await fetchSingleBlog(blogId)
+      }
     }
+    fetchBlog()
   }, [])
 
   if (isLoading) {
-    return <p>Loading...</p>
+    return <Spinner />
   }
 
 

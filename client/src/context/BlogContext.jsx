@@ -38,29 +38,35 @@ export const BlogContextProvider = ({ children }) => {
 
   const fetchAllBlogs = async () => {
     try {
+      dispatch({ type: "FETCH_ALL_BLOGS", payload: [], isLoading: true });
+
       const response = await axios.get(`${baseUrl}/blogs`);
+      if (response.status === 404) {
+        return toast.info('No Blogs Found! Create One');
+      }
       const data = response.data;
 
-      if (data.length === 0) {
-        toast.error('No Blogs Found! Create One');
-        return;
-      }
 
       dispatch({ type: "FETCH_ALL_BLOGS", payload: data });
     } catch (error) {
-      console.error("Error fetching blog data: ", error);
+      console.log(error)
+      if (error?.response?.status === 404) {
+        return toast.info('No Blogs Found! Create One');
+      }
+      else {
+        return toast.error('Something went wrong try again later');
+      }
     }
   }
 
   const fetchSingleBlog = async (blogId) => {
     try {
       const response = await axios.get(`${baseUrl}/blogs/${blogId}`)
-      console.log(response)
       const data = response.data
-      console.log(data)
-      dispatch({ type: "FETCH_SINGLE_BLOG", payload: data })
+      dispatch({ type: "FETCH_SINGLE_BLOG", payload: data, })
+
     } catch (error) {
-      console.error("Error fetching blog data: ", error)
+      toast.error("Error fetching blog data: ", error)
     }
   }
 
@@ -85,7 +91,7 @@ export const BlogContextProvider = ({ children }) => {
         console.error("Failed to create blog:", response);
         toast.error("An error occurred while creating the blog.");
       }
-    console.log(formData)
+      console.log(formData)
 
     } catch (error) {
       console.error(error.message);
