@@ -25,7 +25,6 @@ const blogReducer = (state, action) => {
       return { ...state, blogData: action.payload, isLoading: false }
     case "FETCH_SINGLE_BLOG":
       return { ...state, blogData: action.payload, isLoading: false }
-
     default:
       return state
   }
@@ -71,10 +70,7 @@ export const BlogContextProvider = ({ children }) => {
   }
 
   const createBlog = async (formData) => {
-
     try {
-
-
       const response = await axios.post(`${baseUrl}/blogs`, formData, {
         headers: {
           "Content-Type": "multipart/form-data"
@@ -82,16 +78,14 @@ export const BlogContextProvider = ({ children }) => {
         withCredentials: true
       })
 
-
       if (response.status === 201) {
+        fetchAllBlogs();
         toast.success("Blog Created Successfully");
 
-        fetchAllBlogs();
       } else {
         console.error("Failed to create blog:", response);
         toast.error("An error occurred while creating the blog.");
       }
-      console.log(formData)
 
     } catch (error) {
       console.error(error.message);
@@ -99,10 +93,31 @@ export const BlogContextProvider = ({ children }) => {
     }
   }
 
+  const deleteBlog = async (blogId) => {
+    try {
+      const response = await axios.delete(`${baseUrl}/blogs/${blogId}`, {
+        withCredentials: true
+      })
+
+      if (response.status === 204) {
+        toast.success('Blog Deleted Successfully')
+        fetchAllBlogs()
+      } else {
+        console.error('Failed to delete blog:', response)
+        toast.error('An error occurred while deleting the blog.')
+      }
+
+    } catch (error) {
+      console.error("Error deleting blog:", error)
+      toast.error("An error occurred while deleting the blog.")
+    }
+  }
+
+  const updateBlog = async (blogId) => { }
 
   return (
     <BlogContext.Provider
-      value={{ ...state, fetchAllBlogs, fetchSingleBlog, createBlog }}
+      value={{ ...state, fetchAllBlogs, fetchSingleBlog, createBlog, deleteBlog }}
     >
       {children}
     </BlogContext.Provider>

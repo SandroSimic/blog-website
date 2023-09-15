@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import NewBlogForm from "./pages/NewBlogForm";
 import { useUserContext } from "./context/UserContext";
+import UpdateBlogForm from "./pages/UpdateBlogForm";
 
 const ProtectedRoute = ({ element }) => {
   const { user } = useUserContext();
@@ -39,6 +40,10 @@ function App() {
           <Route
             path="/new-blog"
             element={<ProtectedRoute element={<NewBlogForm />} />}
+          />
+          <Route
+            path="/updateBlog/:blogId"
+            element={<ProtectedRoute element={<UpdateBlogForm />} />}
           />
         </Route>
         <Route path="/login" element={<AuthRedirectRoute element={<LoginPage />} />} />

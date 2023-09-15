@@ -3,9 +3,11 @@
   flex-direction: column;
   padding: 3rem 0rem;
   border-bottom: 1px solid var(--gray-color);
+
   &__userImg {
     max-width: 5rem;
     transition: 0.3s all;
+
     img {
       outline: 1px solid var(--gray-color);
       padding: 2px;
@@ -17,6 +19,47 @@
     &:hover {
       cursor: pointer;
       transform: scale(1.1);
+    }
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__actionBtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+
+    .delete {
+      padding: 1rem;
+      display: flex;
+      background-color: rgba(255, 0, 0, 0.218);
+      color: red;
+      border-radius: 1rem;
+      transition: .2s all;
+
+      &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+      }
+    }
+
+    .edit {
+      padding: 1rem;
+      display: flex;
+      background-color: rgba(0, 0, 255, 0.306);
+      color: rgb(17, 0, 255);
+      border-radius: 1rem;
+      transition: .2s all;
+
+      &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+      }
     }
   }
 
@@ -32,11 +75,11 @@
     align-items: center;
     gap: 1.5rem;
     margin-bottom: 0.5rem;
-    
+
     & h3 {
-        font-weight: 300;
-        color: var(--primary-color);
-        position: relative;
+      font-weight: 300;
+      color: var(--primary-color);
+      position: relative;
 
       &:hover {
         cursor: pointer;
@@ -68,7 +111,7 @@
     }
 
     @media only screen and (max-width: $bp-smallest-small) {
-        font-size: 1.3rem;
+      font-size: 1.3rem;
     }
   }
 
@@ -76,13 +119,14 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     & p {
       color: var(--gray-color);
 
-      
-    @media only screen and (max-width: $bp-small) {
+
+      @media only screen and (max-width: $bp-small) {
         font-size: 1.3rem;
-    }
+      }
     }
   }
 
@@ -90,12 +134,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+
     @media only screen and (max-width: $bp-medium) {
-       flex-direction: column;
-       align-items: stretch;
-       gap: 3rem;
-  }
+      flex-direction: column;
+      align-items: stretch;
+      gap: 3rem;
+    }
 
     &__heading {
       align-self: baseline;
@@ -111,15 +155,16 @@
 
       @media only screen and (max-width: $bp-medium) {
         margin-top: 3rem;
-    }
+      }
 
 
-    @media only screen and (max-width: $bp-small) {
+      @media only screen and (max-width: $bp-small) {
         font-size: 2rem;
+      }
+
+
     }
 
- 
-    }
     &__desc {
       width: 70%;
       display: flex;
@@ -135,8 +180,8 @@
 
       @media only screen and (max-width: $bp-medium) {
         width: 100%;
-    }
- 
+      }
+
     }
 
     &__image {
@@ -170,6 +215,7 @@
         filter: grayscale(1);
         transition: 0.5s all;
       }
+
       &:hover img {
         transform: scale(1.1);
         filter: blur(2px) grayscale(0);

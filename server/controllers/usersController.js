@@ -4,14 +4,19 @@ import jwt from "jsonwebtoken"
 import bcrypt from 'bcryptjs'
 import { createToken } from "../utils/tokenUtils.js";
 
+
+
 const maxAge = 3 * 24 * 60 * 60
 
 export const registerUser = asyncHandler(async (req, res) => {
 
-    const { username, email, password, image } = req.body
+    console.log(req.file)
+    console.log(req.body)
+
+    const { username, email, password } = req.body
 
     const user = await User.create({
-        username, email, password, image
+        username, email, password, image: req.file.path
     })
     const token = createToken(user._id)
     res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 })
@@ -45,7 +50,7 @@ export const loginUser = asyncHandler(async (req, res) => {
             res.cookie('authToken', token, {
                 httpOnly: true, maxAge: 1000 * 60 * 60 * 24, secure: true,
                 sameSite: 'None',
-                
+
             },)
 
             res.json(user)

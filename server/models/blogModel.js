@@ -11,11 +11,15 @@ const blogSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
     },
     creator: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: 'User'
+    },
+    creatorImg: {
+      type: String,
+      // required: true,
       ref: 'User'
     },
     comments: [

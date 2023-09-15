@@ -4,6 +4,8 @@ import { createContext, useContext, useEffect, useReducer } from "react"
 import { baseUrl } from "../helpers/constants"
 import { toast } from "react-toastify"
 import { redirect } from "react-router-dom"
+import axios from 'axios'
+
 
 const UserContext = createContext()
 
@@ -45,22 +47,21 @@ export const UserContextProvider = ({ children }) => {
         }
     }, []);
 
-    const registerUser = async (username, email, password, image) => {
+    const registerUser = async (formData) => {
         try {
-            const response = await fetch(`${baseUrl}/users/register`, {
-                method: "POST",
-                body: JSON.stringify({ username, email, password, image }),
-                headers: { "Content-Type": "application/json" },
-                credentials: 'include'
+            const response = await axios.post(`${baseUrl}/users/register`, formData, {
+                headers: {
+                    'Content-Type': "multipart/form-data"
+                },
+                withCredentials: true
             })
 
             if (!response.ok) {
                 toast.error()
             }
-
-            const data = await response.json()
-
-            console.log(data)
+            toast.success('User Created')
+            console.log(formData)
+            console.log(response)
         } catch (error) {
             toast.error(error.message)
         }
@@ -116,7 +117,7 @@ export const UserContextProvider = ({ children }) => {
         } else {
             console.log('Logout failed')
         }
-        
+
         localStorage.removeItem("user");
         dispatch({ type: "LOGOUT_USER" })
     }

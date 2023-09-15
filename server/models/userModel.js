@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema(
         },
         image: {
             type: String,
-            default: "https://icon-library.com/images/default-user-icon/default-user-icon-20.jpg"
+            default: 'https://icon-library.com/images/default-user-icon/default-user-icon-20.jpg'
         }
     },
     {

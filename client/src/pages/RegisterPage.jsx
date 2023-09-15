@@ -9,19 +9,29 @@ const RegisterPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
+  const [fileName, setFileName] = useState('')
   const { registerUser } = useUserContext()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const formData = new FormData();
+    formData.append('username', username)
+    formData.append('email', email)
+    formData.append('password', password)
+    formData.append('userImage', fileName[0])
 
 
     if (!/^[A-Z]/.test(password) || password.length < 6) {
       return toast.error('Password must start with an uppercase letter and be at least 6 characters long', { autoClose: 5000 });
     }
 
-    registerUser(username, email, password)
-
-    navigate('/login')
+    await registerUser(formData)
+    
+    if(formData) {
+      setTimeout(() => {
+        navigate('/login')
+      }, 2300)
+    }
   }
   const isFormValid = email.trim() === '' || password.trim() === '' || username.trim() === '';
 
@@ -43,7 +53,7 @@ const RegisterPage = () => {
         </div>
         <div className="formRow">
           <label htmlFor='image'> Image: </label>
-          <input id='image' name="image" type="file" placeholder="Image" />
+          <input id='image' name="userImage" type="file" placeholder="Image" onChange={(e) => setFileName(e.target.files)} />
         </div>
         <div className='formRow__action'>
           <button type="submit" disabled={isFormValid} className={`${isFormValid ? 'disable' : 'button'}`}>Register</button>

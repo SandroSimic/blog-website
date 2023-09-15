@@ -12,7 +12,7 @@ const NewBlogForm = () => {
   const navigate = useNavigate()
 
 
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -23,7 +23,7 @@ const NewBlogForm = () => {
 
 
     await createBlog(formData);
-    
+
     setTimeout(() => {
       navigate('/')
     }, 2300)
@@ -34,6 +34,7 @@ const NewBlogForm = () => {
   return (
     <section>
       <form className="form" onSubmit={handleSubmit} encType="multipart/form-data">
+        <h1>Create blog</h1>
         <div className="formRow">
           <label htmlFor='title'>* Title: </label>
           <input id='title' name='title' type="text" placeholder="blog title" value={title} onChange={(e) => setTitle(e.target.value)} />
