@@ -113,11 +113,33 @@ export const BlogContextProvider = ({ children }) => {
     }
   }
 
-  const updateBlog = async (blogId) => { }
+  const updateBlog = async (blogId, formData) => {
+    try {
+      const response = await axios.patch(`${baseUrl}/blogs/${blogId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        },
+        withCredentials: true
+      })
+      if (response.status === 200) {
+        const updatedBlogData = response.data;
+
+        dispatch({ type: "FETCH_SINGLE_BLOG", payload: updatedBlogData });
+        toast.success("Blog Updated Successfully");
+        
+      } else {
+        console.error("Failed to update blog:", response);
+        toast.error("An error occurred while updating the blog.");
+      }
+    } catch (error) {
+      console.error("Error updating blog:", error)
+      toast.error("An error occurred while updating the blog.")
+    }
+  }
 
   return (
     <BlogContext.Provider
-      value={{ ...state, fetchAllBlogs, fetchSingleBlog, createBlog, deleteBlog }}
+      value={{ ...state, fetchAllBlogs, fetchSingleBlog, createBlog, deleteBlog, updateBlog }}
     >
       {children}
     </BlogContext.Provider>
