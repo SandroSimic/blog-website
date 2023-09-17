@@ -1,5 +1,6 @@
 import { HiOutlineBell } from "react-icons/hi"
 import { BiEdit } from "react-icons/Bi"
+import { MdAdminPanelSettings } from "react-icons/md"
 import { FaUserAlt } from 'react-icons/fa'
 import { Link } from "react-router-dom"
 import { useUserContext } from "../../context/UserContext"
@@ -7,7 +8,6 @@ import { useUserContext } from "../../context/UserContext"
 const Navbar = () => {
 
   const { user, logoutUser } = useUserContext()
-  
   console.log(user)
   // const imageUrl = `http://localhost:8000/${user.image}`;
   return (
@@ -26,14 +26,26 @@ const Navbar = () => {
         </div> : ''}
 
         <div className="navigation__buttons">
-          {user &&
-            <Link to={'/new-blog'}>
-              <button className="navigation__btn">
-                <BiEdit />
-                Write
-              </button>
-            </Link>
+          {user && (
+            <>
+              {user.role === 'admin' && (
+                <Link to={'/admin-dashboard'}>
+                  <button className="navigation__btn">
+                    <MdAdminPanelSettings />
+                    Admin
+                  </button>
+                </Link>
+              )}
+              <Link to={'/new-blog'}>
+                <button className="navigation__btn">
+                  <BiEdit />
+                  Write
+                </button>
+              </Link>
+            </>
+          )
           }
+
           {user ? (
             <Link to={'/'}>
               <button className="navigation__btn" onClick={() => logoutUser()}>

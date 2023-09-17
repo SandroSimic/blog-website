@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LayoutPage from "./pages/LayoutPage";
@@ -9,8 +10,9 @@ import RegisterPage from "./pages/RegisterPage";
 import NewBlogForm from "./pages/NewBlogForm";
 import { useUserContext } from "./context/UserContext";
 import UpdateBlogForm from "./pages/UpdateBlogForm";
+import AdminDashboard from "./pages/AdminDashboard";
 
-const ProtectedRoute = ({ element }) => {
+const ProtectedRoute = ({ element, }) => {
   const { user } = useUserContext();
   if (!user) {
     return <Navigate to="/login" replace />;
@@ -27,6 +29,9 @@ const AuthRedirectRoute = ({ element }) => {
 };
 
 function App() {
+  const { user } = useUserContext();
+  console.log(user)
+
   return (
     <Router>
       <Routes>
@@ -50,6 +55,16 @@ function App() {
         <Route
           path="/register"
           element={<AuthRedirectRoute element={<RegisterPage />} />}
+        />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute element={user && user.role === 'admin' ? (
+              <AdminDashboard />
+            ) : (
+              <Navigate to={'/'} replace />
+            )} />
+          }
         />
       </Routes>
     </Router>
