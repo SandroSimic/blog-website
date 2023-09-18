@@ -1,0 +1,63 @@
+.admin__nav {
+    background-color: rgb(39, 39, 39);
+    border-radius: 2rem;
+    width: 100%;
+    padding: 5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &__links {
+        list-style: none;
+        font-size: 2.5rem;
+        gap: 5rem;
+        display: flex;
+        align-items: center;
+        
+        
+        a {
+            text-decoration: none;
+            color: #ffff;
+        }
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        position: relative;
+
+        &::after {
+            position: absolute;
+            content: '';
+            bottom: -1rem;
+            width: 0;
+            height: 1px;
+            background-color: white;
+            transition: .2s all;
+        }
+
+        &:hover {
+            cursor: pointer;
+            &::after {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.adminBtn  {
+    background-color: transparent;
+    color: black;
+    font-size: 2rem;
+    padding: 1.5rem 3rem;
+    border-radius: 1rem;
+    background-color: #ffff;
+    border: none;
+    transition: .2s all;
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+    }
+}

@@ -35,5 +35,15 @@
 
 .blogDetail-section {
   padding: 5rem;
-  
+}
+
+.admin-section {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin: 5rem;
+  padding: 2.5rem 3rem;
+  background-color: #ffff;
+  border: 1px solid var(--gray-color-light);
+  box-shadow: 1rem 1rem 1rem var(--gray-color);
 }
