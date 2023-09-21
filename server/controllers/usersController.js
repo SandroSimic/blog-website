@@ -3,6 +3,7 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcryptjs'
 import { createToken } from "../utils/tokenUtils.js";
+import Blog from "../models/blogModel.js";
 
 
 
@@ -75,3 +76,50 @@ export const logoutUser = asyncHandler(async (req, res) => {
     })
 })
 
+
+
+
+export const getAllUsers = asyncHandler(async (req, res) => {
+    const users = await User.find({}, '-password')
+
+    if (users.length === 0) {
+        res.status(404).json({
+            message: 'No users found'
+        })
+    }
+
+    res.status(200).json(users)
+})
+
+
+export const getUserById = asyncHandler(async (req, res) => {
+    const userId = req.params.userId
+
+
+    const user = await User.findById(userId)
+
+
+    res.status(200).json({
+        user
+    })
+})
+
+export const getUsersBlogs = asyncHandler(async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const blogs = await Blog.find({ creator: userId });
+
+        if (blogs.length === 0) {
+            return res.status(404).json({
+                message: 'No blogs found for this user'
+            });
+        }
+
+        res.status(200).json(blogs);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error'
+        });
+    }
+}) 

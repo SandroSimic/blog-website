@@ -54,6 +54,7 @@ const UpdateBlogForm = () => {
     return (
         <section>
             <form className="form" encType="multipart/form-data" onSubmit={handleSubmit}>
+                <h2>Update blog</h2>
                 <div className="formRow">
                     <label htmlFor='title'>* Title: </label>
                     <input id='title' name='title' type="text" placeholder="blog title" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -68,7 +69,7 @@ const UpdateBlogForm = () => {
                     <span className="file-label">Accepted file types: .jpg, .jpeg, .png | Max file size: 5MB</span>
                 </div>
                 <div className="formRow">
-                    <button type="submit" disabled={false} className={'button'}>Create</button>
+                    <button type="submit" disabled={false} className={'button'}>Update</button>
                 </div>
             </form>
         </section>

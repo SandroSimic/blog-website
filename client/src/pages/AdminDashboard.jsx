@@ -1,15 +1,10 @@
-import AdminNav from "../components/NavComponents/AdminNav"
+
+import AdminDashboardLayout from "./AdminDashboardLayout"
 
 const AdminDashboard = () => {
-    return (
-        <section className="admin-section">
-            <header className="admin-header">
-                <AdminNav />
-            </header>
-            <main className="admin-main">
-                Admin body
-            </main>
-        </section>
-    )
+
+
+
+    return <AdminDashboardLayout />
 }
 export default AdminDashboard

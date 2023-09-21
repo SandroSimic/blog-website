@@ -25,6 +25,8 @@ const blogReducer = (state, action) => {
       return { ...state, blogData: action.payload, isLoading: false }
     case "FETCH_SINGLE_BLOG":
       return { ...state, blogData: action.payload, isLoading: false }
+    case "FETCH_USERS_BLOGS":
+      return { ...state, blogData: action.payload, isLoading: false }
     default:
       return state
   }
@@ -126,7 +128,7 @@ export const BlogContextProvider = ({ children }) => {
 
         dispatch({ type: "FETCH_SINGLE_BLOG", payload: updatedBlogData });
         toast.success("Blog Updated Successfully");
-        
+
       } else {
         console.error("Failed to update blog:", response);
         toast.error("An error occurred while updating the blog.");
@@ -137,9 +139,21 @@ export const BlogContextProvider = ({ children }) => {
     }
   }
 
+  const getUserBlogs = async (userId) => {
+    try {
+      const response = await axios.get(`${baseUrl}/users/blog/${userId}`);
+      const data = response.data
+      console.log(data)
+      dispatch({ type: "FETCH_USERS_BLOGS", payload: data })
+    } catch (error) {
+      console.error("Error updating blog:", error)
+      toast.error("An error occurred while fetching user blogs.")
+    }
+  }
+
   return (
     <BlogContext.Provider
-      value={{ ...state, fetchAllBlogs, fetchSingleBlog, createBlog, deleteBlog, updateBlog }}
+      value={{ ...state, fetchAllBlogs, fetchSingleBlog, createBlog, deleteBlog, updateBlog, getUserBlogs }}
     >
       {children}
     </BlogContext.Provider>

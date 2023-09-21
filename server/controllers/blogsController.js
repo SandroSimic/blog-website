@@ -66,12 +66,13 @@ export const updateBlog = asyncHandler(async (req, res) => {
   try {
     const blog = await Blog.findById(id)
 
+
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" })
     }
 
-    if (blog.creator.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ message: "You do not have permission to update this blog" })
+    if (req.user.role !== 'admin' && blog.creator.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "You do not have permission to update this blog" });
     }
 
     if (title) {
@@ -102,10 +103,24 @@ export const updateBlog = asyncHandler(async (req, res) => {
 })
 
 export const deleteBlog = asyncHandler(async (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
 
-  await Blog.findByIdAndDelete(id)
+  try {
+    const blog = await Blog.findById(id);
 
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
 
-  res.status(204).json({ message: "blog deleted" })
-})
+    if (req.user.role !== 'admin' && blog.creator.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "You do not have permission to delete this blog" });
+    }
+
+    await Blog.findByIdAndDelete(id);
+
+    res.status(204).json({ message: "Blog deleted" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
