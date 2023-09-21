@@ -1,14 +1,15 @@
-import { FaBookOpen, FaUsers, FaTable } from 'react-icons/fa'
+import { FaBookOpen, FaUsers } from 'react-icons/fa'
+import {BsGraphDown} from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 const AdminNav = () => {
   return (
     <nav className="admin__nav">
-      <button className='adminBtn main'>Home</button>
+      <Link to={'/'} className='adminBtn'>Home</Link>
       <ul className="admin__nav__links">
-        <Link to='/admin-dashboard'>
+        <Link to='/admin-dashboard/graph'>
           <li className="admin__nav__link">
-            <FaTable />
-            Main
+            <BsGraphDown />
+            Graph
           </li>
         </Link>
         <Link to='/admin-dashboard/blogs'>

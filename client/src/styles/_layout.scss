@@ -40,10 +40,15 @@
 .admin-section {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 10rem;
   margin: 5rem;
-  padding: 2.5rem 3rem;
+  padding: 3rem 3rem;
   background-color: #ffff;
   border: 1px solid var(--gray-color-light);
+  border-radius: 3rem;
   box-shadow: 1rem 1rem 1rem var(--gray-color);
+}
+
+.profile-section {
+  padding: 5rem;
 }

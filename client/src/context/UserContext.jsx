@@ -16,6 +16,7 @@ export const useUserContext = () => {
 
 const initialState = {
     user: null,
+    users: [],
     isLoading: true,
 }
 
@@ -30,6 +31,10 @@ const userReducer = (state, action) => {
             return { ...state, user: action.payload, isLoading: false }
         case "LOGOUT_USER":
             return { ...state, user: "", isLoading: false }
+        case "SET_USERS":
+            return { ...state, users: action.payload, isLoading: false }
+        case "GET_USER":
+            return { ...state, users: action.payload, isLoading: false }
         default:
             return state
     }
@@ -122,9 +127,31 @@ export const UserContextProvider = ({ children }) => {
         dispatch({ type: "LOGOUT_USER" })
     }
 
+    const getAllUsers = async () => {
+        try {
+            const response = await axios.get(`${baseUrl}/users`);
+            const users = response.data
+            console.log(response)
+            console.log(users)
+            dispatch({ type: "SET_USERS", payload: users })
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+    const getUserById = async (userId) => {
+        try {
+            const response = await axios.get(`${baseUrl}/users/${userId}`)
+            const user = response.data
+            dispatch({ type: "GET_USER", payload: user })
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
 
     return (
-        <UserContext.Provider value={{ ...state, loginUser, registerUser, logoutUser }}>
+        <UserContext.Provider value={{ ...state, loginUser, registerUser, logoutUser, getAllUsers, getUserById }}>
             {children}
         </UserContext.Provider>
     )

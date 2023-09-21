@@ -12,8 +12,8 @@ const Blog = ({ id, blogImage, dateOfCreation, title, content, creator, creatorI
   const { deleteBlog } = useBlogContext()
   const { user } = useUserContext()
 
-
-  const userCreatedBlog = user && user._id === creator._id
+  const isAdmin = user && user.role === 'admin';
+  const userCreatedBlog = user && user._id === creator._id;
 
   const handleDeleteClick = () => {
     if (window.confirm('Are you sure you want to delete this blog?')) {
@@ -30,7 +30,9 @@ const Blog = ({ id, blogImage, dateOfCreation, title, content, creator, creatorI
           </div>
           <div className="blog__userDesc">
             <div className="blog__username">
-              <h3>{creator.username}</h3>
+              <Link to={`/profile/${creator._id}`}>
+                <h3>{creator.username}</h3>
+              </Link>
               <BsDot className="dot" />
               <p>{dateOfCreation}</p>
             </div>
@@ -38,7 +40,7 @@ const Blog = ({ id, blogImage, dateOfCreation, title, content, creator, creatorI
         </div>
         <div className="blog__actionBtn">
 
-          {userCreatedBlog && (
+          {(isAdmin || userCreatedBlog) && (
             <>
               <Link className="edit" to={`/updateBlog/${id}`}><AiFillEdit /></Link>
               <div className="delete" onClick={handleDeleteClick}><AiFillDelete /></div>

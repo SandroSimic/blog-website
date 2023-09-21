@@ -8,8 +8,6 @@ import { useUserContext } from "../../context/UserContext"
 const Navbar = () => {
 
   const { user, logoutUser } = useUserContext()
-  console.log(user)
-  // const imageUrl = `http://localhost:8000/${user.image}`;
   return (
     <nav className="navigation">
       <div className="navigation__items">
@@ -20,9 +18,11 @@ const Navbar = () => {
           <div className="navigation__notification">
             <HiOutlineBell className="navigation__notification--icon" />
           </div>
-          <div className="navigation__profileIcon">
-            <img src={`http://localhost:8000/${user.image}`} alt={user.username} />
-          </div>
+          <Link to={`/profile/${user._id}`}>
+            <div className="navigation__profileIcon">
+              <img src={`http://localhost:8000/${user.image}`} alt={user.username} />
+            </div>
+          </Link>
         </div> : ''}
 
         <div className="navigation__buttons">
