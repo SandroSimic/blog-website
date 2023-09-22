@@ -37,7 +37,7 @@ export const BlogContextProvider = ({ children }) => {
 
 
 
-  const fetchAllBlogs = async (sortOrder) => {
+  const fetchAllBlogs = async (sortOrder, currentPage = 1) => {
     dispatch({ type: "FETCH_ALL_BLOGS", payload: [], isLoading: true });
     try {
 

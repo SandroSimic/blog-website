@@ -15,7 +15,7 @@ export const getAllBlogs = asyncHandler(async (req, res) => {
     sortCriteria = { title: -1 }
   }
 
-  const blogs = await Blog.find().populate('creator', 'username').collation({ locale: 'en', strength: 2 }).sort(sortCriteria);
+  const blogs = await Blog.find().populate('creator', 'username').collation({ locale: 'en', strength: 2 }).sort(sortCriteria)
 
   if (blogs.length === 0) {
     return res.status(404).send("No Blogs found")

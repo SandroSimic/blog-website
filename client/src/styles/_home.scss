@@ -82,29 +82,29 @@
 
 .pagination {
   display: flex;
-  align-items: center;
   margin-top: 3rem;
-  justify-content: center;
-  gap: 3rem;
+  gap: 1rem;
 
-  &__box {
+
+
+  &__number {
     display: flex;
+    gap: 3rem;
+    color: black;
     background-color: rgba(0, 0, 255, 0.306);
-    color: white;
     font-size: 2rem;
-    padding: 1.5rem;
-    transition: .2s all;
+    padding: 1rem 1.5rem;
+    border-radius: 1.5rem;
 
     &:hover {
       cursor: pointer;
-      background-color: rgb(17, 0, 255);
+    }
+
+    &.active {
+      background-color: rgb(17, 0, 255);;
+      color: white;
     }
   }
 
-  &__number {
-    background-color: aqua;
-    font-size: 2rem;
-    padding: 1rem 1.5rem;
-    color: white;
-  }
+
 }

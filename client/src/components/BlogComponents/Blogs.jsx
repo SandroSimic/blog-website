@@ -5,9 +5,9 @@ import { useBlogContext } from "../../context/BlogContext"
 import { useEffect } from "react"
 import Spinner from "../Spinner"
 
-const Blogs = ({ sortOrder, searchValue }) => {
+const Blogs = ({ sortOrder, searchValue, blogData }) => {
 
-  const { blogData, fetchAllBlogs, isLoading } = useBlogContext()
+  const { fetchAllBlogs, isLoading } = useBlogContext()
   useEffect(() => {
     const fetchBlogs = async () => {
       await fetchAllBlogs(sortOrder)
