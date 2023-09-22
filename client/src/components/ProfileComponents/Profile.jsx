@@ -61,7 +61,7 @@ const Profile = ({ userId }) => {
             </div>
             <div className="profile__blogs">
 
-                {Array.isArray(blogData) && blogData.length > 0  ? blogData.map(blog => (
+                {Array.isArray(blogData)&& blogData.length > 0  ? blogData.map(blog => (
                     <div key={blog._id}>
                         <Link to={`/blog/${blog._id}`}>
                             <div className="profile__blog">
