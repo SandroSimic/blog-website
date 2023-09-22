@@ -1,25 +1,34 @@
+/* eslint-disable react/prop-types */
 import moment from "moment"
 import Blog from "./Blog"
 import { useBlogContext } from "../../context/BlogContext"
 import { useEffect } from "react"
 import Spinner from "../Spinner"
 
-const Blogs = () => {
+const Blogs = ({ sortOrder, searchValue }) => {
 
   const { blogData, fetchAllBlogs, isLoading } = useBlogContext()
   useEffect(() => {
     const fetchBlogs = async () => {
-      await fetchAllBlogs()
+      await fetchAllBlogs(sortOrder)
     }
     fetchBlogs()
-  }, [])
+  }, [sortOrder])
 
+
+  const filteredBlogs = searchValue
+    ? blogData.filter((blog) =>
+      blog.title.toLowerCase().includes(searchValue.toLowerCase())
+    )
+    : blogData;
 
   if (isLoading) {
     return <Spinner />
   }
-  if (blogData.length === 0) {
-    return <p className="emptyBlog">No Blogs Found! Be the first to create a blog!</p>
+
+
+  if (!filteredBlogs.length) {
+    return <p className="emptyBlog">No Blogs Found!</p>
   }
 
 
@@ -29,8 +38,8 @@ const Blogs = () => {
     <section className="blogs-section">
       <h3 className="heading3">Articles</h3>
       <hr className="line" />
-      {blogData && blogData.length > 0 && (
-        blogData.map((blog) => (
+      {
+        filteredBlogs.map((blog) => (
           <Blog
             key={blog._id}
             id={blog._id}
@@ -42,7 +51,7 @@ const Blogs = () => {
             creatorImg={blog.creatorImg}
           />
         ))
-      )}
+      }
     </section>
   )
 }

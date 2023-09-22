@@ -2,8 +2,21 @@ import Blog from "../models/blogModel.js"
 import asyncHandler from "../middleware/asyncHandler.js"
 
 export const getAllBlogs = asyncHandler(async (req, res) => {
-  const blogs = await Blog.find().populate('creator', 'username')
-  console.log(blogs)
+
+  const { sortOrder } = req.query
+
+  let sortCriteria = { createdAt: 1 };
+
+  if (sortOrder === 'asc') {
+    sortCriteria = { title: 1 }
+  }
+
+  if (sortOrder === 'desc') {
+    sortCriteria = { title: -1 }
+  }
+
+  const blogs = await Blog.find().populate('creator', 'username').collation({ locale: 'en', strength: 2 }).sort(sortCriteria);
+
   if (blogs.length === 0) {
     return res.status(404).send("No Blogs found")
   }

@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useBlogContext } from '../context/BlogContext'
-import { AiFillLike, AiOutlineLike } from 'react-icons/ai'
-import { BsFillBookmarkFill, BsBookmark } from 'react-icons/bs'
+import { AiOutlineLike } from 'react-icons/ai'
+import { BsBookmark } from 'react-icons/bs'
 import Spinner from './../components/Spinner'
 import moment from 'moment'
 

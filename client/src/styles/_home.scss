@@ -8,7 +8,7 @@
   @media only screen and (max-width: $bp-medium-small) {
     grid-column: 1/4;
   }
-  
+
   &__navigation {
     display: flex;
     align-items: center;
@@ -77,5 +77,34 @@
 
   @media only screen and (max-width: $bp-medium-small) {
     grid-column: 1/4;
+  }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  margin-top: 3rem;
+  justify-content: center;
+  gap: 3rem;
+
+  &__box {
+    display: flex;
+    background-color: rgba(0, 0, 255, 0.306);
+    color: white;
+    font-size: 2rem;
+    padding: 1.5rem;
+    transition: .2s all;
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(17, 0, 255);
+    }
+  }
+
+  &__number {
+    background-color: aqua;
+    font-size: 2rem;
+    padding: 1rem 1.5rem;
+    color: white;
   }
 }
