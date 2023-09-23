@@ -18,6 +18,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlogs from "./pages/AdminBlogs";
 import AdminUsers from "./pages/AdminUsers";
 import AdminGraph from "./pages/AdminGraph";
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 
 const ProtectedRoute = ({ element }) => {
   const { user } = useUserContext();
@@ -38,12 +40,26 @@ const AuthRedirectRoute = ({ element }) => {
 function App() {
   const { user } = useUserContext();
 
+  const [socket, setSocket] = useState(null)
+
+  console.log(user)
+  useEffect(() => {
+    setSocket(io('http://localhost:3000'))
+  }, [])
+
+  useEffect(() => {
+    socket?.emit("newUser", user?.username)
+    console.log(socket)
+    console.log(user?.username)
+  }, [socket, user])
+
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LayoutPage />}>
+        <Route path="/" element={<LayoutPage socket={socket} />}>
           <Route index element={<HomePage />} />
-          <Route path="/blog/:id" element={<BlogDetailPage />} />
+          <Route path="/blog/:id" element={<BlogDetailPage socket={socket} />} />
           <Route
             path="/profile/:userId"
             element={<ProtectedRoute element={<ProfilePage />} />}

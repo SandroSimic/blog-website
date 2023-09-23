@@ -1,17 +1,39 @@
-import { useEffect } from 'react'
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useBlogContext } from '../context/BlogContext'
 import { AiOutlineLike } from 'react-icons/ai'
 import { BsBookmark } from 'react-icons/bs'
 import Spinner from './../components/Spinner'
 import moment from 'moment'
+import { useUserContext } from '../context/UserContext'
 
-const BlogDetailPage = () => {
+const BlogDetailPage = ({ socket }) => {
   const { id: blogId } = useParams()
   const { fetchSingleBlog, isLoading, blogData } = useBlogContext()
+  const [liked, setLiked] = useState(false)
+  const [bookmarked, setBookmarked] = useState(false)
+  const { user } = useUserContext()
+
+  // Access the creator's username if it exists
+  const creatorUsername = blogData?.creator?.username || 'Unknown'
+  const creatorId = blogData?.creator?._id
+
+  const handleNotification = (type) => {
+    console.log('Emitting notification')
+    setLiked(true);
+    socket.emit("sendNotification", {
+      senderName: user.username,
+      receiverName: creatorUsername,
+      type
+    })
+  }
+
+  const handleBookmarked = () => {
+    setBookmarked(!bookmarked)
+  }
 
   useEffect(() => {
-
     const fetchBlog = async () => {
       if (blogId) {
         await fetchSingleBlog(blogId)
@@ -25,9 +47,7 @@ const BlogDetailPage = () => {
   }
 
 
-  // Access the creator's username if it exists
-  const creatorUsername = blogData?.creator?.username || 'Unknown'
-  const creatorId = blogData?.creator?._id
+
   return (
     <section className='blogDetail-section'>
       <div className='blogDetail'>
@@ -35,8 +55,8 @@ const BlogDetailPage = () => {
           <div className='blogDetail__title'>
             <h1>{blogData.title}</h1>
             <div className='blogDetail__buttons'>
-              <button><BsBookmark /></button>
-              <button><AiOutlineLike /></button>
+              <button onClick={handleBookmarked} className={`${bookmarked ? "liked" : ""}`}><BsBookmark /></button>
+              <button onClick={() => handleNotification(1)} className={`${liked ? "liked" : ""}`}><AiOutlineLike /></button>
             </div>
           </div>
           <div className='blogDetail__info'>

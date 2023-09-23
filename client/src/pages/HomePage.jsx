@@ -6,14 +6,15 @@ import { useBlogContext } from "../context/BlogContext";
 import Pagination from "../components/Pagination";
 
 const HomePage = () => {
-  let { blogData, fetchAllBlogs } = useBlogContext(); 
+  let { blogData, fetchAllBlogs } = useBlogContext();
+
   const [sortOrder, setSortOrder] = useState('default');
   const [searchValue, setSearchValue] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [blogsPerPage] = useState(4);
 
   useEffect(() => {
-    if (sortOrder !== "default") { 
+    if (sortOrder !== "default") {
       const fetchBlogs = async () => {
         fetchAllBlogs(sortOrder);
       }

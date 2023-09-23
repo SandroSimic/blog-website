@@ -1,11 +1,46 @@
+/* eslint-disable react/prop-types */
 import { HiOutlineBell } from "react-icons/hi"
 import { BiEdit } from "react-icons/Bi"
 import { MdAdminPanelSettings } from "react-icons/md"
 import { FaUserAlt } from 'react-icons/fa'
 import { Link } from "react-router-dom"
 import { useUserContext } from "../../context/UserContext"
+import { useEffect, useState } from "react"
 
-const Navbar = () => {
+const Navbar = ({ socket }) => {
+
+  const [notifications, setNotifications] = useState([])
+  const [notificationOpen, setNotificationOpen] = useState(false)
+  useEffect(() => {
+    socket?.on("getNotification", data => {
+      setNotifications((prev) => [...prev, data])
+    })
+  }, [socket])
+
+  console.log(notifications)
+
+  const displayNotification = ({ senderName, type }) => {
+    let action;
+
+    if (type === 1) {
+      action = "like"
+    } else if (type === 2) {
+      action = "bookmarked"
+    } else {
+      action = "commented"
+    }
+    return (
+      <span className="notification">{`${senderName} ${action} your post`}</span>
+    )
+  }
+
+  const openNotification = () => {
+    setNotificationOpen(!notificationOpen)
+  }
+  const clearNotification = () => {
+    setNotifications([])
+    setNotificationOpen(false)
+  }
 
   const { user, logoutUser } = useUserContext()
   return (
@@ -16,7 +51,24 @@ const Navbar = () => {
         </h1>
         {user ? <div className="navigation__mainItems">
           <div className="navigation__notification">
-            <HiOutlineBell className="navigation__notification--icon" />
+            <HiOutlineBell className="navigation__notification--icon" onClick={openNotification} />
+            {
+              notifications.length > 0 && (
+                <div className="navigation__notification--alert">
+                  {notifications.length}
+                </div>
+              )
+            }
+            {notificationOpen && (
+
+              notifications.length > 0 ? (
+                <div className="navigation__notification--message">{notifications.map(n =>
+                  displayNotification(n)
+                )}
+                  <button onClick={clearNotification}>Mark Read</button>
+                </div>
+              ) : <div className="navigation__notification--message">Your notifications are empty</div>
+            )}
           </div>
           <Link to={`/profile/${user._id}`}>
             <div className="navigation__profileIcon">

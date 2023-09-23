@@ -15,6 +15,7 @@ const Blog = ({ id, blogImage, dateOfCreation, title, content, creator, creatorI
   const isAdmin = user && user.role === 'admin';
   const userCreatedBlog = user && user._id === creator._id;
 
+
   const handleDeleteClick = () => {
     if (window.confirm('Are you sure you want to delete this blog?')) {
       deleteBlog(id)

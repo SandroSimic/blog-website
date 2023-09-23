@@ -18,8 +18,8 @@ const Blogs = ({ sortOrder, searchValue, blogData }) => {
 
   const filteredBlogs = searchValue
     ? blogData.filter((blog) =>
-        blog.title.toLowerCase().includes(searchValue.toLowerCase())
-      )
+      blog.title.toLowerCase().includes(searchValue.toLowerCase())
+    )
     : blogData;
 
   if (isLoading) {
