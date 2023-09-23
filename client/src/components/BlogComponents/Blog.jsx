@@ -26,7 +26,9 @@ const Blog = ({ id, blogImage, dateOfCreation, title, content, creator, creatorI
       <div className="blog__info">
         <div className="blog__userInfo">
           <div className="blog__userImg">
-            <img src={`${creatorsImg}`} alt="user img" />
+            <Link to={`/profile/${creator._id}`}>
+              <img src={`${creatorsImg}`} alt="user img" />
+            </Link>
           </div>
           <div className="blog__userDesc">
             <div className="blog__username">

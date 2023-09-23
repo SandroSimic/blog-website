@@ -1,5 +1,8 @@
 .blogDetail {
-    
+    a{
+        text-decoration: underline;
+        color: black;
+    }
 
     &__heading {
         display: flex;

@@ -24,7 +24,7 @@ const blogReducer = (state, action) => {
     case "FETCH_ALL_BLOGS":
       return { ...state, blogData: action.payload, isLoading: false }
     case "FETCH_SINGLE_BLOG":
-      return { ...state, blogData: action.payload, isLoading: false }
+      return { ...state, blogData: action.payload, isLoading: false}
     case "FETCH_USERS_BLOGS":
       return { ...state, blogData: action.payload, isLoading: false }
     default:
@@ -42,13 +42,13 @@ export const BlogContextProvider = ({ children }) => {
     try {
       const response = await axios.get(`${baseUrl}/blogs/?sortOrder=${sortOrder}`);
       const data = response.data;
-
-      dispatch({ type: "FETCH_ALL_BLOGS", payload: data });
-  
+      dispatch({ type: "FETCH_ALL_BLOGS", payload: data, isLoading: false });
     } catch (error) {
-      toast.info(error.request.response)
+      toast.info(error.request.response);
+      dispatch({ type: "FETCH_ALL_BLOGS", payload: [], isLoading: false }); // Set isLoading to false on error
     }
   }
+  
 
   const fetchSingleBlog = async (blogId) => {
     try {
@@ -136,9 +136,7 @@ export const BlogContextProvider = ({ children }) => {
 
       dispatch({ type: "FETCH_USERS_BLOGS", payload: data })
     } catch (error) {
-      console.error("Error updating blog:", error.response.data.message)
       dispatch({ type: "FETCH_USERS_BLOGS", payload: [] })
-      toast.info("This user does not have any blogs")
     }
   }
 

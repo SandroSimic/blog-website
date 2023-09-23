@@ -29,7 +29,6 @@ const Profile = ({ userId }) => {
         fetchData();
     }, [userId]);
 
-    console.log(blogData)
 
     const user = users.user;
 

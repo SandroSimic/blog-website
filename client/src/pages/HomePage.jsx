@@ -6,22 +6,21 @@ import { useBlogContext } from "../context/BlogContext";
 import Pagination from "../components/Pagination";
 
 const HomePage = () => {
-  let { blogData, fetchAllBlogs } = useBlogContext(); // Use let instead of const
-  const [sortOrder, setSortOrder] = useState();
+  let { blogData, fetchAllBlogs } = useBlogContext(); 
+  const [sortOrder, setSortOrder] = useState('default');
   const [searchValue, setSearchValue] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [blogsPerPage] = useState(4);
 
   useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        await fetchAllBlogs();
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
+    if (sortOrder !== "default") { 
+      const fetchBlogs = async () => {
+        fetchAllBlogs(sortOrder);
       }
-    };
-    fetchBlogs();
-  }, []);
+      fetchBlogs();
+    }
+  }, [sortOrder]);
+
 
   const handleSortOrderChange = (newSortOrder) => {
     setSortOrder(newSortOrder);
@@ -38,9 +37,7 @@ const HomePage = () => {
     setCurrentPage(pageNumber);
   };
 
-  // Ensure blogData is an array
   if (!Array.isArray(blogData)) {
-    // Handle the case where blogData is not an array (e.g., set it to an empty array)
     blogData = [];
   }
 

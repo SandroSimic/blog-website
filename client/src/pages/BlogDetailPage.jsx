@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useBlogContext } from '../context/BlogContext'
 import { AiOutlineLike } from 'react-icons/ai'
 import { BsBookmark } from 'react-icons/bs'
@@ -27,7 +27,7 @@ const BlogDetailPage = () => {
 
   // Access the creator's username if it exists
   const creatorUsername = blogData?.creator?.username || 'Unknown'
-
+  const creatorId = blogData?.creator?._id
   return (
     <section className='blogDetail-section'>
       <div className='blogDetail'>
@@ -44,7 +44,7 @@ const BlogDetailPage = () => {
               <img src={`http://localhost:8000/${blogData.image}`} alt={blogData.title} />
             </div>
             <div className='blogDetail__info--text'>
-              <h3><span>Creator:</span> {creatorUsername}</h3>
+              <h3><span>Creator:</span> <Link to={`/profile/${creatorId}`}>{creatorUsername}</Link></h3>
               <h3><span>Date of Creation:</span> {moment(blogData.createdAt).format("MMMM Do YYYY")}</h3>
             </div>
           </div>
