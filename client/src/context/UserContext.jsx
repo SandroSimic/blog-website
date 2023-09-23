@@ -60,47 +60,34 @@ export const UserContextProvider = ({ children }) => {
                 },
                 withCredentials: true
             })
-
             if (!response.ok) {
-                toast.error()
+                toast.error('Email or password incorrect')
             }
             toast.success('User Created')
-            console.log(formData)
-            console.log(response)
         } catch (error) {
+            console.log(error)
             toast.error(error.message)
         }
     }
 
 
-    const loginUser = async (email, password) => {
+    const loginUser = async (formData) => {
         try {
-            const response = await fetch(`${baseUrl}/users/login`, {
-                method: "POST",
+            const response = await axios.post(`${baseUrl}/users/login`, formData, {
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': "application/json"
                 },
-                body: JSON.stringify({
-                    email, password
-                }),
-                credentials: 'include'
+                withCredentials: true
             })
+            console.log(response)
 
-            // Log response headers and cookies
-            console.log('Response Headers:', response.headers);
-            console.log('Response Cookies:', document.cookie);
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message);
-            }
-            const data = await response.json()
+            const data = await response.data
             console.log(data)
-
             localStorage.setItem("user", JSON.stringify(data));
             dispatch({ type: "LOGIN_USER", payload: data })
         } catch (error) {
-            toast.error(error.message)
+            console.log(error)
+            toast.error(error.response.data.message)
         }
     }
 

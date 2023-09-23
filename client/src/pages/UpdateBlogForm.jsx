@@ -4,11 +4,10 @@ import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 
 const UpdateBlogForm = () => {
-
     const { blogData, fetchSingleBlog, updateBlog } = useBlogContext()
     const { blogId } = useParams()
-    const [title, setTitle] = useState(blogData.title)
-    const [content, setContent] = useState(blogData.content)
+    const [title, setTitle] = useState('') // Initialize with an empty string
+    const [content, setContent] = useState('') // Initialize with an empty string
     const [fileName, setFileName] = useState('')
     const navigate = useNavigate()
 
@@ -24,6 +23,7 @@ const UpdateBlogForm = () => {
     }, [])
 
     useEffect(() => {
+        // Update title and content when blogData is available
         setTitle(blogData.title || "");
         setContent(blogData.content || "");
     }, [blogData]);
@@ -37,19 +37,13 @@ const UpdateBlogForm = () => {
         formData.append('blogImage', fileName[0])
         console.log(formData)
 
-
         try {
             await updateBlog(blogId, formData)
             navigate('/')
         } catch (error) {
             toast.error("Error updating blog:", error);
         }
-
-
     }
-
-
-
 
     return (
         <section>
@@ -60,11 +54,11 @@ const UpdateBlogForm = () => {
                     <input id='title' name='title' type="text" placeholder="blog title" value={title} onChange={(e) => setTitle(e.target.value)} />
                 </div>
                 <div className="formRow">
-                    <label htmlFor='content'>*Content: </label>
+                    <label htmlFor='content'>* Content: </label>
                     <textarea id='content' name="content" type="textarea" placeholder="content" value={content} onChange={(e) => setContent(e.target.value)} />
                 </div>
                 <div className="formRow">
-                    <label htmlFor='image'>*Image: </label>
+                    <label htmlFor='image'>* Image: </label>
                     <input id='image' type="file" name="blogImage" accept="image/" onChange={(e) => setFileName(e.target.files)} />
                     <span className="file-label">Accepted file types: .jpg, .jpeg, .png | Max file size: 5MB</span>
                 </div>

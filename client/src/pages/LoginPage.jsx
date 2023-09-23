@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useUserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 const LoginPage = () => {
 
   const { loginUser, user } = useUserContext()
@@ -13,11 +13,21 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    const formData = new FormData();
+    formData.append('email', email)
+    formData.append('password', password)
 
-    if (password.length < 6) {
-      return toast.error('Password must 6 or more letter long')
+    if(!email || !password){
+      toast.error('Email or password incorrent')
     }
-    await loginUser(email, password)
+
+    await loginUser(formData)
+    
+    if(formData) {
+      setTimeout(() => {
+        navigate('/login')
+      }, 2300)
+    }
 
   }
 

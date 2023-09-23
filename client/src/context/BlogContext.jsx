@@ -37,26 +37,16 @@ export const BlogContextProvider = ({ children }) => {
 
 
 
-  const fetchAllBlogs = async (sortOrder, currentPage = 1) => {
+  const fetchAllBlogs = async (sortOrder) => {
     dispatch({ type: "FETCH_ALL_BLOGS", payload: [], isLoading: true });
     try {
-
       const response = await axios.get(`${baseUrl}/blogs/?sortOrder=${sortOrder}`);
-      if (response.status === 404) {
-        return toast.info('No Blogs Found! Create One');
-      }
       const data = response.data;
 
-
       dispatch({ type: "FETCH_ALL_BLOGS", payload: data });
+  
     } catch (error) {
-      console.log(error)
-      if (error?.response?.status === 404) {
-        return toast.info('No Blogs Found! Create One');
-      }
-      else {
-        return toast.error('Something went wrong try again later');
-      }
+      toast.info(error.request.response)
     }
   }
 

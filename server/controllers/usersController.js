@@ -44,7 +44,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     if (user) {
         const auth = await bcrypt.compare(password, user.password)
         if (auth) {
-            const token = await createToken(user._id)
+            const token = createToken(user._id)
 
 
 
