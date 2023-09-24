@@ -4,6 +4,7 @@ import {
   deleteBlog,
   getAllBlogs,
   getBlogById,
+  likeBlog,
   updateBlog,
 } from "../controllers/blogsController.js"
 import { checkAdmin, checkUser } from "../middleware/authMiddleware.js"
@@ -19,5 +20,6 @@ router.route("/:id").get(getBlogById).patch(checkUser, uploadBlogImage.single('b
 router.route("/:id").patch(checkAdmin, uploadBlogImage.single('blogImage'), updateBlog);
 router.route("/:id").delete(checkAdmin, deleteBlog);
 
+router.route('/:id/like').post(checkUser, likeBlog)
 
 export default router

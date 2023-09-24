@@ -137,3 +137,32 @@ export const deleteBlog = asyncHandler(async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+export const likeBlog = asyncHandler(async (req, res) => {
+  const blogId = req.params.id;
+
+  try {
+    const blog = await Blog.findById(blogId)
+
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found!" });
+    }
+
+    const user = req.user
+
+
+    if (blog.likes.includes(user._id)) {
+      blog.likes = blog.likes.filter((userId) => userId.toString() !== user._id.toString())
+      await blog.save()
+      res.status(200).json({ message: "Blog unliked" })
+    } else {
+      blog.likes.push(user._id);
+      await blog.save()
+      res.status(200).json({ message: "Blog liked" })
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+})

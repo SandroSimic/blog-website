@@ -22,6 +22,12 @@ const blogSchema = new mongoose.Schema(
       // required: true,
       ref: 'User'
     },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    ],
     comments: [
       {
         comment: String,

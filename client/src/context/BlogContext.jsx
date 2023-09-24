@@ -24,7 +24,7 @@ const blogReducer = (state, action) => {
     case "FETCH_ALL_BLOGS":
       return { ...state, blogData: action.payload, isLoading: false }
     case "FETCH_SINGLE_BLOG":
-      return { ...state, blogData: action.payload, isLoading: false}
+      return { ...state, blogData: action.payload, isLoading: false }
     case "FETCH_USERS_BLOGS":
       return { ...state, blogData: action.payload, isLoading: false }
     default:
@@ -48,7 +48,7 @@ export const BlogContextProvider = ({ children }) => {
       dispatch({ type: "FETCH_ALL_BLOGS", payload: [], isLoading: false }); // Set isLoading to false on error
     }
   }
-  
+
 
   const fetchSingleBlog = async (blogId) => {
     try {
@@ -140,9 +140,27 @@ export const BlogContextProvider = ({ children }) => {
     }
   }
 
+  const likeBlog = async (blogId, userId) => {
+    try {
+      const response = await axios.post(`${baseUrl}/blogs/${blogId}/like`, { userId }, {
+        withCredentials: true
+      });
+
+      if (response.status === 200) {
+        console.log("Blog liked successfully")
+      } else {
+        console.error("Failed to like/unlike blog:", response);
+        toast.error("An error occurred while liking/unliking the blog.")
+      }
+    } catch (error) {
+      console.error("Error liking/unliking blog:", error);
+      toast.error("An error occurred while liking/unliking the blog.");
+    }
+  }
+
   return (
     <BlogContext.Provider
-      value={{ ...state, fetchAllBlogs, fetchSingleBlog, createBlog, deleteBlog, updateBlog, getUserBlogs }}
+      value={{ ...state, fetchAllBlogs, fetchSingleBlog, createBlog, deleteBlog, updateBlog, getUserBlogs, likeBlog }}
     >
       {children}
     </BlogContext.Provider>

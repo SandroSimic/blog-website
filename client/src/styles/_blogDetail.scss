@@ -24,7 +24,7 @@
     &__buttons {
         display: flex;
         gap: 2rem;
-
+        align-items: center;
         button {
             padding: 1.3rem;
             font-size: 2.5rem;
@@ -39,6 +39,10 @@
                 cursor: pointer;
                 transform: scale(1.1);
             }
+        }
+
+        & p {
+            font-size: 2rem;
         }
 
         .liked {

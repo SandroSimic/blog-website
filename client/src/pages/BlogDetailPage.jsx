@@ -10,17 +10,19 @@ import { useUserContext } from '../context/UserContext'
 
 const BlogDetailPage = ({ socket }) => {
   const { id: blogId } = useParams()
-  const { fetchSingleBlog, isLoading, blogData } = useBlogContext()
-  const [liked, setLiked] = useState(false)
+  const { fetchSingleBlog, isLoading, blogData, likeBlog } = useBlogContext()
+  const [liked, setLiked] = useState()
   const [bookmarked, setBookmarked] = useState(false)
+  const [likeCount, setLikeCount] = useState(0)
   const { user } = useUserContext()
 
-  // Access the creator's username if it exists
   const creatorUsername = blogData?.creator?.username || 'Unknown'
   const creatorId = blogData?.creator?._id
 
+
+
+
   const handleNotification = (type) => {
-    console.log('Emitting notification')
     setLiked(true);
     socket.emit("sendNotification", {
       senderName: user.username,
@@ -29,9 +31,38 @@ const BlogDetailPage = ({ socket }) => {
     })
   }
 
+  useEffect(() => {
+    if (user && blogData?.likes?.includes(user._id)) {
+      setLiked(true);
+    } else {
+      setLiked(false);
+    }
+  }, [user, blogData.likes]);
+
+  const handleLikeClick = async () => {
+    try {
+      if (!liked) {
+        handleNotification(1)
+      } else {
+        const notificationData = {
+          senderName: user.username,
+          receiverName: creatorUsername
+        }
+        socket.emit('removeNotification', notificationData)
+      }
+      await likeBlog(blogId, user._id)
+      await fetchSingleBlog(blogId)
+      setLiked(!liked)
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+
   const handleBookmarked = () => {
     setBookmarked(!bookmarked)
   }
+
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -42,12 +73,21 @@ const BlogDetailPage = ({ socket }) => {
     fetchBlog()
   }, [])
 
+  useEffect(() => {
+    if (blogData && blogData.likes) {
+      setLikeCount(blogData.likes.length)
+    }
+  }, [blogData.likes])
+
+
   if (isLoading) {
     return <Spinner />
   }
 
 
 
+
+  console.log(blogData)
   return (
     <section className='blogDetail-section'>
       <div className='blogDetail'>
@@ -56,7 +96,8 @@ const BlogDetailPage = ({ socket }) => {
             <h1>{blogData.title}</h1>
             <div className='blogDetail__buttons'>
               <button onClick={handleBookmarked} className={`${bookmarked ? "liked" : ""}`}><BsBookmark /></button>
-              <button onClick={() => handleNotification(1)} className={`${liked ? "liked" : ""}`}><AiOutlineLike /></button>
+              <button onClick={handleLikeClick} className={`${liked ? "liked" : ""}`}><AiOutlineLike /></button>
+              <p>{likeCount}</p>
             </div>
           </div>
           <div className='blogDetail__info'>

@@ -61,6 +61,7 @@
     &--message {
       position: absolute;
       font-size: 1.6rem;
+      border-radius: 1.3rem;
       display: flex;
       align-items: center;
       flex-direction: column;
@@ -70,6 +71,23 @@
       width: 30rem;
       left: -10rem;
       padding: 1.5rem;
+      z-index: 10;
+    }
+
+    &--btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 1.5rem;
+      border-radius: 1rem;
+      background-color: #ffff;
+      border: 1px solid var(--primary-color);
+
+      &:hover {
+        cursor: pointer;
+        background-color: var(--primary-color);
+        color: #ffff;
+      }
     }
   }
 

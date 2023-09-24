@@ -18,19 +18,19 @@ connectDB()
 const app = express()
 app.use(cookieParser())
 
+
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+
+
 
 app.use(cors({ credentials: true, origin: 'http://127.0.0.1:5173' }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use("/uploads", express.static(__dirname + "/uploads"));
-
-
-
-
-
-
 
 
 app.use(morgan("dev"))
@@ -47,6 +47,7 @@ app.use(errorHandler)
 const server = app.listen(process.env.PORT, (req, res) => {
   console.log("server running on port " + process.env.PORT)
 })
+
 
 
 const io = new Server(server, {
@@ -81,11 +82,30 @@ io.on('connection', (socket) => {
   socket.on("sendNotification", ({ senderName, receiverName, type }) => {
     console.log('Received sendNotification event');
     const receiver = getUser(receiverName);
-    console.log(receiver)
-    io.to(receiver.socketId).emit("getNotification", {
-      senderName, type
-    });
+
+    if (receiver) {
+      io.to(receiver.socketId).emit("getNotification", {
+        senderName, type
+      });
+    } else {
+      console.log(`Receiver with username '${receiverName}' not found.`);
+    }
   });
+  
+  socket.on("removeNotification", ({ senderName, receiverName }) => {
+    console.log('Received removeNotification event');
+    const receiver = getUser(receiverName);
+
+    if (receiver) {
+      io.to(receiver.socketId).emit("notificationRemoved", {
+        senderName
+      });
+    } else {
+      console.log(`Receiver with username '${receiverName}' not found.`);
+    }
+  });
+
+
 
   socket.on('disconnect', () => {
     removeUser(socket.id)

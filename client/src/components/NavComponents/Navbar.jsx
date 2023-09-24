@@ -17,9 +17,8 @@ const Navbar = ({ socket }) => {
     })
   }, [socket])
 
-  console.log(notifications)
 
-  const displayNotification = ({ senderName, type }) => {
+  const displayNotification = ({ senderName, type }, index) => {
     let action;
 
     if (type === 1) {
@@ -30,7 +29,9 @@ const Navbar = ({ socket }) => {
       action = "commented"
     }
     return (
-      <span className="notification">{`${senderName} ${action} your post`}</span>
+      <span className="notification" key={index}>
+        {`${senderName} ${action} your blog`}
+      </span>
     )
   }
 
@@ -62,10 +63,9 @@ const Navbar = ({ socket }) => {
             {notificationOpen && (
 
               notifications.length > 0 ? (
-                <div className="navigation__notification--message">{notifications.map(n =>
-                  displayNotification(n)
+                <div className="navigation__notification--message">{notifications.map((n, index) => displayNotification(n, index)
                 )}
-                  <button onClick={clearNotification}>Mark Read</button>
+                  <button onClick={clearNotification} className="navigation__notification--btn">Mark Read</button>
                 </div>
               ) : <div className="navigation__notification--message">Your notifications are empty</div>
             )}
