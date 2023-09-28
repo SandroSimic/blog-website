@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { createContext, useContext, useEffect, useReducer } from "react"
@@ -18,6 +19,7 @@ const initialState = {
     user: null,
     users: [],
     isLoading: true,
+    bookmarkedBlogs: []
 }
 
 
@@ -33,6 +35,8 @@ const userReducer = (state, action) => {
             return { ...state, user: "", isLoading: false }
         case "SET_USERS":
             return { ...state, users: action.payload, isLoading: false }
+        case "FETCH_USERS_BLOGS":
+            return { ...state, bookmarkedBlogs: action.payload, isLoading: false }
         case "GET_USER":
             return { ...state, users: action.payload, isLoading: false }
         default:
@@ -60,13 +64,10 @@ export const UserContextProvider = ({ children }) => {
                 },
                 withCredentials: true
             })
-            if (!response.ok) {
-                toast.error('Email or password incorrect')
-            }
             toast.success('User Created')
         } catch (error) {
             console.log(error)
-            toast.error(error.message)
+            toast.error(error.response.data.message)
         }
     }
 
@@ -92,8 +93,6 @@ export const UserContextProvider = ({ children }) => {
     }
 
     const logoutUser = async () => {
-
-        // Clear user data from local storage
         localStorage.removeItem("user");
 
         const response = await fetch(`${baseUrl}/users/logout`, {
@@ -136,9 +135,54 @@ export const UserContextProvider = ({ children }) => {
         }
     }
 
+    const bookmarkBlog = async (blogId, userId) => {
+        try {
+            const response = await axios.post(`${baseUrl}/blogs/${blogId}/bookmark`, { userId }, {
+                withCredentials: true
+            });
+
+            if (response.status === 200) {
+                // Update user's bookmarkedBlogs in the state
+                const user = state.user;
+                const isBookmarked = user.bookmarkedBlogs.includes(blogId);
+
+                if (isBookmarked) {
+                    // If already bookmarked, remove it
+                    const updatedBookmarkedBlogs = user.bookmarkedBlogs.filter(id => id !== blogId);
+                    const updatedUser = { ...user, bookmarkedBlogs: updatedBookmarkedBlogs };
+                    dispatch({ type: "LOGIN_USER", payload: updatedUser });
+                    toast.info("Blog removed from bookmarks");
+                } else {
+                    // If not bookmarked, add it
+                    const updatedUser = { ...user, bookmarkedBlogs: [...user.bookmarkedBlogs, blogId] };
+                    dispatch({ type: "LOGIN_USER", payload: updatedUser });
+
+                    toast.info(response.data.message);
+                }
+            } else {
+                console.error("Failed to bookmark blog:", response);
+                toast.error("An error occurred while bookmarking the blog.");
+            }
+        } catch (error) {
+            console.error("Error bookmarkblog:", error);
+            toast.error("An error occurred while bookmarking the blog.");
+        }
+    }
+
+    const getUserBookmarkedBlogs = async (userId) => {
+        try {
+            const response = await axios.get(`${baseUrl}/users/${userId}/bookmarked-blogs`);
+            const data = response.data;
+            dispatch({ type: "FETCH_USERS_BLOGS", payload: data });
+        } catch (error) {
+            dispatch({ type: "FETCH_USERS_BLOGS", payload: [] });
+            console.error("Error fetching user's bookmarked blogs:", error);
+            toast.error("An error occurred while fetching user's bookmarked blogs.");
+        }
+    };
 
     return (
-        <UserContext.Provider value={{ ...state, loginUser, registerUser, logoutUser, getAllUsers, getUserById }}>
+        <UserContext.Provider value={{ ...state, loginUser, registerUser, logoutUser, getAllUsers, getUserById, bookmarkBlog, getUserBookmarkedBlogs }}>
             {children}
         </UserContext.Provider>
     )

@@ -16,7 +16,7 @@ const HomePage = () => {
   useEffect(() => {
     if (sortOrder !== "default") {
       const fetchBlogs = async () => {
-        fetchAllBlogs(sortOrder);
+        await fetchAllBlogs(sortOrder);
       }
       fetchBlogs();
     }

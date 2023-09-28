@@ -23,12 +23,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             minLength: [6, 'Password must be at least 6 characters long'],
             required: [true, 'Password is required'],
-            validate: {
-                validator: function (value) {
-                    return /^[A-Z]/.test(value);
-                },
-                message: "Password must start with an uppercase letter"
-            },
+
         },
         role: {
             type: String,
@@ -38,7 +33,25 @@ const userSchema = new mongoose.Schema(
         image: {
             type: String,
             default: 'https://icon-library.com/images/default-user-icon/default-user-icon-20.jpg'
-        }
+        },
+        bookmarkedBlogs: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Blog"
+            }
+        ],
+        following: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            }
+        ],
+        followers: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            }
+        ],
     },
     {
         timestamps: true,

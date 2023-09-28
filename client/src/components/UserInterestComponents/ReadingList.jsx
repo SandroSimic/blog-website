@@ -1,22 +1,27 @@
-import image from "../../images/dummyProfileImg.jpg"
+/* eslint-disable react/prop-types */
+import { Link } from "react-router-dom";
 
-const ReadingList = () => {
+const ReadingList = ({ blog }) => {
+  const imageUrl = `http://localhost:8000/${blog.image}`;
+
+
+
   return (
     <div className="readingList__group">
       <div className="readingList__info">
-        <h2>A Beginner's Guide to write balance in photography</h2>
+        <h1>
+          <Link to={`/blog/${blog._id}`}>
+            {blog.title}
+          </Link>
+        </h1>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quae
-          obcaecati facilis adipisci vitae amet nobis autem, cupiditate optio et
-          repellat ducimus libero eveniet pariatur?
+          {blog.content}
         </p>
-        <div className="readingList__userInfo">
-          <div className="readingList__userInfo__image">
-            <img src={image} alt="user Profile" />
-          </div>
-          <p>Irene au</p>
-          <span>Apr 16, 2022</span>
-        </div>
+      </div>
+      <div className="readingList__image">
+        <Link to={`/blog/${blog._id}`}>
+          <img src={imageUrl} />
+        </Link>
       </div>
     </div>
   )

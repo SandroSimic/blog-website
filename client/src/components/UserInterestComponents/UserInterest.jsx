@@ -1,20 +1,29 @@
-import InterestedPeople from "./InterestedPeople"
 import ReadingList from "./ReadingList"
-
+import { useUserContext } from '../../context/UserContext'
+import { useEffect, } from "react"
 const UserInterest = () => {
+
+  const { user, getUserBookmarkedBlogs, bookmarkedBlogs } = useUserContext()
+
+  const bookmarkBlogs = bookmarkedBlogs.bookmarkedBlogs
+  useEffect(() => {
+    if (user) {
+      getUserBookmarkedBlogs(user._id)
+    }
+  }, [user])
+
+
   return (
     <section className="userInterest-section">
-      <h2>People you might be interested</h2>
-      <div className="userInterested-section__people">
-        <InterestedPeople />
-        <InterestedPeople />
-        <InterestedPeople />
-      </div>
       <div className="readingList">
         <h2>My Reading List</h2>
-        <ReadingList />
-        <ReadingList />
-        <ReadingList />
+        {
+          bookmarkBlogs?.length > 0 ? (
+            bookmarkBlogs?.map((blog) => (
+              <ReadingList key={blog._id} blogId={blog._id} blog={{ ...blog }} />
+            ))
+        ): <p>No Blogs Bookmarked!</p>
+        }
       </div>
     </section>
   )

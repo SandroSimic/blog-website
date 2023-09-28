@@ -10,26 +10,26 @@ import { useUserContext } from '../context/UserContext'
 
 const BlogDetailPage = ({ socket }) => {
   const { id: blogId } = useParams()
-  const { fetchSingleBlog, isLoading, blogData, likeBlog } = useBlogContext()
+  const { fetchSingleBlog, isLoading, blogData, likeBlog, } = useBlogContext()
   const [liked, setLiked] = useState()
   const [bookmarked, setBookmarked] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
-  const { user } = useUserContext()
+  const { user, bookmarkBlog } = useUserContext()
+
 
   const creatorUsername = blogData?.creator?.username || 'Unknown'
   const creatorId = blogData?.creator?._id
 
 
 
-
   const handleNotification = (type) => {
-    setLiked(true);
     socket.emit("sendNotification", {
       senderName: user.username,
       receiverName: creatorUsername,
       type
     })
   }
+
 
   useEffect(() => {
     if (user && blogData?.likes?.includes(user._id)) {
@@ -38,30 +38,6 @@ const BlogDetailPage = ({ socket }) => {
       setLiked(false);
     }
   }, [user, blogData.likes]);
-
-  const handleLikeClick = async () => {
-    try {
-      if (!liked) {
-        handleNotification(1)
-      } else {
-        const notificationData = {
-          senderName: user.username,
-          receiverName: creatorUsername
-        }
-        socket.emit('removeNotification', notificationData)
-      }
-      await likeBlog(blogId, user._id)
-      await fetchSingleBlog(blogId)
-      setLiked(!liked)
-    } catch (error) {
-      console.error(error);
-    }
-
-  }
-
-  const handleBookmarked = () => {
-    setBookmarked(!bookmarked)
-  }
 
 
   useEffect(() => {
@@ -77,8 +53,50 @@ const BlogDetailPage = ({ socket }) => {
     if (blogData && blogData.likes) {
       setLikeCount(blogData.likes.length)
     }
-  }, [blogData.likes])
+  }, [blogData, blogData.likes])
 
+  useEffect(() => {
+    if (user && user.bookmarkedBlogs && user.bookmarkedBlogs.includes(blogId)) {
+      setBookmarked(true);
+    } else {
+      setBookmarked(false);
+    }
+  }, [user, blogId]);
+
+  const handleLikeClick = async () => {
+    try {
+      if (!liked) {
+        handleNotification(1)
+      } else {
+        const notificationData = {
+          senderName: user.username,
+          receiverName: creatorUsername
+        }
+        socket.emit('removeNotification', notificationData)
+      }
+      await likeBlog(blogId, user._id)
+      await fetchSingleBlog(blogId)
+      setLiked((prevState) => !prevState)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
+
+  const handleBookmarked = async () => {
+    if (user && user.bookmarkedBlogs) {
+      try {
+        await bookmarkBlog(blogId, user._id);
+        setBookmarked(prevState => !prevState)
+
+
+
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
 
   if (isLoading) {
     return <Spinner />
@@ -87,18 +105,22 @@ const BlogDetailPage = ({ socket }) => {
 
 
 
-  console.log(blogData)
   return (
     <section className='blogDetail-section'>
       <div className='blogDetail'>
         <div className='blogDetail__heading'>
           <div className='blogDetail__title'>
             <h1>{blogData.title}</h1>
-            <div className='blogDetail__buttons'>
-              <button onClick={handleBookmarked} className={`${bookmarked ? "liked" : ""}`}><BsBookmark /></button>
-              <button onClick={handleLikeClick} className={`${liked ? "liked" : ""}`}><AiOutlineLike /></button>
-              <p>{likeCount}</p>
-            </div>
+            {
+              user?._id === blogData?.creator?._id ? "" : (
+                <div className='blogDetail__buttons'>
+                  <button onClick={handleBookmarked} className={`${bookmarked ? "bookmarked" : ""}`}><BsBookmark /></button>
+
+                  <button onClick={handleLikeClick} className={`${liked ? "liked" : ""}`}><AiOutlineLike /></button>
+                  <p>{likeCount}</p>
+                </div>
+              )
+            }
           </div>
           <div className='blogDetail__info'>
             <div className='blogDetail__info__imgDiv'>
@@ -113,27 +135,6 @@ const BlogDetailPage = ({ socket }) => {
             {blogData.content}
           </div>
         </div>
-      </div>
-      <div className='blogDetail__commentBox'>
-        <h2>Comments</h2>
-        <div className='blogDetail__comment'>
-          <div className='blogDetail__comment--userInfo'>
-            <h3>Your Name</h3>
-            <p>1/20/2023</p>
-          </div>
-          <p>Comment</p>
-        </div>
-        <div className='blogDetail__comment'>
-          <div className='blogDetail__comment--userInfo'>
-            <h3>Your Name</h3>
-            <p>1/20/2023</p>
-          </div>
-          <p>Comment</p>
-        </div>
-        <form className='blogDetail__commentForm'>
-          <input type='text' placeholder='Enter Comment' />
-          <button type='submit'>Comment</button>
-        </form>
       </div>
     </section>
   )

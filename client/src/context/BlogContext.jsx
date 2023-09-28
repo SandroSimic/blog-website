@@ -19,18 +19,18 @@ const initialState = {
 }
 
 const blogReducer = (state, action) => {
-
   switch (action.type) {
     case "FETCH_ALL_BLOGS":
-      return { ...state, blogData: action.payload, isLoading: false }
+      return { ...state, blogData: action.payload, isLoading: false };
     case "FETCH_SINGLE_BLOG":
-      return { ...state, blogData: action.payload, isLoading: false }
+      return { ...state, blogData: action.payload, isLoading: false };
     case "FETCH_USERS_BLOGS":
-      return { ...state, blogData: action.payload, isLoading: false }
+      return { ...state, blogData: action.payload, isLoading: false };
     default:
-      return state
+      return state;
   }
-}
+};
+
 
 export const BlogContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(blogReducer, initialState)
@@ -45,7 +45,7 @@ export const BlogContextProvider = ({ children }) => {
       dispatch({ type: "FETCH_ALL_BLOGS", payload: data, isLoading: false });
     } catch (error) {
       toast.info(error.request.response);
-      dispatch({ type: "FETCH_ALL_BLOGS", payload: [], isLoading: false }); // Set isLoading to false on error
+      dispatch({ type: "FETCH_ALL_BLOGS", payload: [], isLoading: false });
     }
   }
 
@@ -148,6 +148,7 @@ export const BlogContextProvider = ({ children }) => {
 
       if (response.status === 200) {
         console.log("Blog liked successfully")
+
       } else {
         console.error("Failed to like/unlike blog:", response);
         toast.error("An error occurred while liking/unliking the blog.")
@@ -158,9 +159,13 @@ export const BlogContextProvider = ({ children }) => {
     }
   }
 
+ 
+
+
+
   return (
     <BlogContext.Provider
-      value={{ ...state, fetchAllBlogs, fetchSingleBlog, createBlog, deleteBlog, updateBlog, getUserBlogs, likeBlog }}
+      value={{ ...state, fetchAllBlogs, fetchSingleBlog, createBlog, deleteBlog, updateBlog, getUserBlogs, likeBlog,  }}
     >
       {children}
     </BlogContext.Provider>

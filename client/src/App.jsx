@@ -39,18 +39,14 @@ const AuthRedirectRoute = ({ element }) => {
 
 function App() {
   const { user } = useUserContext();
-
   const [socket, setSocket] = useState(null)
 
-  console.log(user)
   useEffect(() => {
     setSocket(io('http://localhost:3000'))
   }, [])
 
   useEffect(() => {
     socket?.emit("newUser", user?.username)
-    console.log(socket)
-    console.log(user?.username)
   }, [socket, user])
 
 

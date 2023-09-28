@@ -19,7 +19,6 @@ const blogSchema = new mongoose.Schema(
     },
     creatorImg: {
       type: String,
-      // required: true,
       ref: 'User'
     },
     likes: [

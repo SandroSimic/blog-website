@@ -25,6 +25,10 @@ const RegisterPage = () => {
       return toast.error('Password must start with an uppercase letter and be at least 6 characters long', { autoClose: 5000 });
     }
 
+    if (!email || !username) {
+      return toast.error('Email already taken');
+    }
+
     await registerUser(formData)
     
     if(formData) {

@@ -56,7 +56,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 
             res.json(user)
         } else {
-            throw Error('Incorrect password')
+            throw Error('Incorrect email or password')
         }
     } else {
         res.status(401).json({
@@ -122,4 +122,25 @@ export const getUsersBlogs = asyncHandler(async (req, res) => {
             message: 'Internal server error'
         });
     }
-}) 
+})
+
+export const getUserBookmarkedBlogs = asyncHandler(async (req, res) => {
+    try {
+        const userId = req.params.userId
+
+        const user = await User.findById(userId)
+
+        if (!user) {
+            return res.status(404).json({ message: "User not founds" })
+        }
+
+        const bookmarkedBlogIds = user.bookmarkedBlogs
+
+        const bookmarkedBlogs = await Blog.find({ _id: { $in: bookmarkedBlogIds } })
+        res.status(200).json({ bookmarkedBlogs })
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+})

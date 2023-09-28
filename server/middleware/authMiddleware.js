@@ -11,14 +11,16 @@ const checkUser = async (req, res, next) => {
 
     try {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        console.log(decodedToken)
         const user = await User.findById(decodedToken.id);
-
+        console.log(user)
         if (!user) {
             req.user = null;
             return next();
         }
 
         req.user = user;
+        console.log(user)
 
         return next();
     } catch (err) {

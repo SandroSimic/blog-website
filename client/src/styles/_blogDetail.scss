@@ -1,5 +1,5 @@
 .blogDetail {
-    a{
+    a {
         text-decoration: underline;
         color: black;
     }
@@ -25,6 +25,7 @@
         display: flex;
         gap: 2rem;
         align-items: center;
+
         button {
             padding: 1.3rem;
             font-size: 2.5rem;
@@ -35,7 +36,8 @@
             align-items: center;
             justify-content: center;
             transition: .2s all;
-            &:hover{
+
+            &:hover {
                 cursor: pointer;
                 transform: scale(1.1);
             }
@@ -46,6 +48,11 @@
         }
 
         .liked {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .bookmarked {
             background-color: var(--primary-color);
             color: white;
         }
@@ -65,6 +72,7 @@
             width: 100%;
             height: 100%;
         }
+
         &--text {
             display: flex;
             flex-direction: column;
@@ -91,7 +99,7 @@
 
 
     }
-    
+
     &__comment {
         display: flex;
         flex-direction: column;
@@ -112,14 +120,14 @@
         flex-direction: column;
         gap: 3rem;
 
-       & input {
-        padding: 1.5rem 3rem;
-        font-size: 2rem;
-        border-radius: 1.5rem;
-        border: 1px solid black;
+        & input {
+            padding: 1.5rem 3rem;
+            font-size: 2rem;
+            border-radius: 1.5rem;
+            border: 1px solid black;
         }
 
-       & button {
+        & button {
             align-self: flex-end;
             padding: 2rem;
             font-size: 2rem;
@@ -127,7 +135,8 @@
             background-color: transparent;
             border: 1px solid var(--gray-color);
             transition: .2s all;
-            &:hover{
+
+            &:hover {
                 cursor: pointer;
                 background-color: var(--primary-color);
                 color: #ffff;

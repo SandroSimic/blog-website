@@ -27,8 +27,6 @@ const HomeNav = ({ onSortOrderChange, onSearchChange }) => {
         <div className="home__navigation__buttons">
           <button onClick={() => handleSortOrderChange('asc')} >A-Z</button>
           <button onClick={() => handleSortOrderChange('desc')}>Z-A</button>
-          <button>Most Liked</button>
-          <button>Least Liked</button>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import Blog from "../models/blogModel.js"
 import asyncHandler from "../middleware/asyncHandler.js"
+import User from "../models/userModel.js";
 
 export const getAllBlogs = asyncHandler(async (req, res) => {
 
@@ -164,5 +165,53 @@ export const likeBlog = asyncHandler(async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
+  }
+})
+
+export const bookmarkBlog = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const blogId = req.params.id;
+
+  try {
+    const blog = await Blog.findById(blogId);
+
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found!" });
+    }
+
+    const isBookmarked = user.bookmarkedBlogs.some((bookmarkBlog) => bookmarkBlog._id.toString() === blogId)
+
+    if (isBookmarked) {
+      user.bookmarkedBlogs = user.bookmarkedBlogs.filter(
+        (bookmarkBlog) => bookmarkBlog._id.toString() !== blogId
+      )
+      res.status(200).json({ message: "Blog unbookmarked" })
+    } else {
+      user.bookmarkedBlogs.push(blog);
+      res.status(200).json({ message: "Blog bookmarked", blog })
+    }
+
+    await user.save();
+  } catch (error) {
+    console.error("Database error:", error);
+    res.status(500).json({ message: "Database error" });
+  }
+});
+
+export const getUserBookmarkedBlogs = asyncHandler(async (req, res) => {
+  const userId = req.params.userId
+
+  try {
+    const user = await User.findById(userId)
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const bookmarkedBlogs = await Blog.find({ _id: { $in: user.bookmarkedBlogs } });
+    res.status(200).json(bookmarkedBlogs);
+  } catch (error) {
+    console.error("Database error:", error);
+    res.status(500).json({ message: "Database error" });
   }
 })
