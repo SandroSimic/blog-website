@@ -1,1 +1,1 @@
-export const baseUrl = "https://reader-fw4o.onrender.com/api/v1";
+export const baseUrl = "https://reader-j6tn.onrender.com/api/v1";
