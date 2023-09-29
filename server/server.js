@@ -30,7 +30,7 @@ const __dirname = dirname(__filename);
 app.use(cors({ credentials: true, origin: ['http://127.0.0.1:5173', "https://reader-frontend-k8t2.onrender.com"] }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use("/uploads", express.static(__dirname + "/uploads"));
+app.use("/uploads", express.static(join(__dirname, "uploads")));
 
 
 app.use(morgan("dev"))
