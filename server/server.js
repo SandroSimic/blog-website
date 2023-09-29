@@ -1,4 +1,3 @@
-import { Server } from "socket.io";
 import express from "express"
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -10,6 +9,7 @@ import blogRouter from "./routes/blogsRoute.js"
 import userRouter from "./routes/usersRoute.js"
 import connectDB from "./data/config/connectDB.js"
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js"
+import { Server } from "socket.io";
 
 dotenv.config()
 
