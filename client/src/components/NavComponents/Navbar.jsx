@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { HiOutlineBell } from "react-icons/hi"
-import { BiEdit } from "react-icons/Bi"
+import { BiEdit } from "react-icons/bi"
 import { MdAdminPanelSettings } from "react-icons/md"
 import { FaUserAlt } from 'react-icons/fa'
 import { Link } from "react-router-dom"
