@@ -7,7 +7,7 @@ import { useUserContext } from "../../context/UserContext";
 
 // eslint-disable-next-line react/prop-types
 const Blog = ({ id, blogImage, dateOfCreation, title, content, creator, creatorImg }) => {
-  const imageUrl = `data:image/jpeg;base64,${blogImage}`;
+  const imageUrl = `https://reader-j6tn.onrender.com/${blogImage}`;
   const creatorsImg = `https://reader-j6tn.onrender.com/${creatorImg}`;
   const { deleteBlog } = useBlogContext()
   const { user } = useUserContext()
