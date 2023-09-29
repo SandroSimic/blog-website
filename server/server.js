@@ -35,6 +35,10 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 
 app.use(morgan("dev"))
 
+app.get("/", (req,res) => {
+  res.json("Hello")
+})
+
 app.use("/api/v1/blogs", blogRouter)
 app.use("/api/v1/users", userRouter)
 
