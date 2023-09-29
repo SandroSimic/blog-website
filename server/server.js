@@ -27,7 +27,7 @@ const __dirname = dirname(__filename);
 
 
 
-app.use(cors({ credentials: true, origin: ['http://127.0.0.1:5173', "https://mern-blog-app.onrender.com"] }))
+app.use(cors({ credentials: true, origin: ['http://127.0.0.1:5173'] }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use("/uploads", express.static(__dirname + "/uploads"));
@@ -58,7 +58,7 @@ const server = app.listen(process.env.PORT, (req, res) => {
 
 const io = new Server(server, {
   cors: {
-    origin: "https://blog-website-smoky-phi.vercel.app"
+    origin: "http://127.0.0.1:5173"
   }
 })
 
