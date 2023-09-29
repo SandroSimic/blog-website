@@ -15,8 +15,6 @@ import NewBlogForm from "./pages/NewBlogForm";
 import { useUserContext } from "./context/UserContext";
 import UpdateBlogForm from "./pages/UpdateBlogForm";
 import AdminDashboard from "./pages/AdminDashboard";
-import AdminBlogs from "./pages/AdminBlogs";
-import AdminUsers from "./pages/AdminUsers";
 import AdminGraph from "./pages/AdminGraph";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
@@ -84,8 +82,6 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route path="/admin-dashboard/blogs" element={<AdminBlogs />} />
-            <Route path="/admin-dashboard/users" element={<AdminUsers />} />
             <Route path="/admin-dashboard/graph" element={<AdminGraph />} />
           </Route>
         </Route>

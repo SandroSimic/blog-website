@@ -143,20 +143,4 @@ export const getUserBookmarkedBlogs = asyncHandler(async (req, res) => {
     }
 })
 
-export const deleteUser = asyncHandler(async (req, res) => {
-    const userId = req.params.userId
-
-
-    const user = await User.findById(userId)
-
-    if (!user) {
-        return res.status(404).json({ message: "User not found" })
-    }
-
-    await Blog.deleteMany({ creator: userId })
-
-    await User.findByIdAndDelete(userId)
-
-    res.status(200).json({ message: "User and associated blogs deleted" })
-})
 
