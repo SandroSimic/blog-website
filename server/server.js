@@ -27,13 +27,17 @@ const __dirname = dirname(__filename);
 
 
 
-app.use(cors({ credentials: true, origin: 'http://127.0.0.1:5173' }))
+app.use(cors({ credentials: true, origin: 'https://blog-website-smoky-phi.vercel.app' }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
 
 app.use(morgan("dev"))
+
+app.get("/", (req,res) => {
+  res.json("Hello")
+})
 
 app.use("/api/v1/blogs", blogRouter)
 app.use("/api/v1/users", userRouter)
@@ -52,7 +56,7 @@ const server = app.listen(process.env.PORT, (req, res) => {
 
 const io = new Server(server, {
   cors: {
-    origin: "http://127.0.0.1:5173"
+    origin: "https://blog-website-smoky-phi.vercel.app"
   }
 })
 
