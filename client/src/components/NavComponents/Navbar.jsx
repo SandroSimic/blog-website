@@ -72,7 +72,7 @@ const Navbar = ({ socket }) => {
           </div>
           <Link to={`/profile/${user._id}`}>
             <div className="navigation__profileIcon">
-              <img src={`http://localhost:8000/${user.image}`} alt={user.username} />
+              <img src={`https://reader-j6tn.onrender.com/${user.image}`} alt={user.username} />
             </div>
           </Link>
         </div> : ''}
