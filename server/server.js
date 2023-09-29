@@ -27,15 +27,17 @@ const __dirname = dirname(__filename);
 
 
 
-app.use(cors({ credentials: true, origin: 'https://blog-website-smoky-phi.vercel.app' }))
+app.use(cors({ credentials: true, origin: ['http://127.0.0.1:5173', "https://mern-blog-app.onrender.com"] }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
+if (process.env)
 
-app.use(morgan("dev"))
 
-app.get("/", (req,res) => {
+  app.use(morgan("dev"))
+
+app.get("/", (req, res) => {
   res.json("Hello")
 })
 
@@ -95,7 +97,7 @@ io.on('connection', (socket) => {
       console.log(`Receiver with username '${receiverName}' not found.`);
     }
   });
-  
+
   socket.on("removeNotification", ({ senderName, receiverName }) => {
     console.log('Received removeNotification event');
     const receiver = getUser(receiverName);
