@@ -39,9 +39,15 @@ export const getBlogById = asyncHandler(async (req, res) => {
 
 export const createBlog = asyncHandler(async (req, res) => {
   const { title, content } = req.body
-  console.log(req.file)
 
-  const blog = new Blog({ title, content, image: req.file.path, creator: req.user._id, creatorImg: req.user.image })
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  const imageBuffer = fs.readFileSync(req.file.path);
+  const imageBase64 = imageBuffer.toString('base64');
+
+  const blog = new Blog({ title, content, image: imageBase64, creator: req.user._id, creatorImg: req.user.image })
 
   try {
     const createdBlog = await blog.save();
