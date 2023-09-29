@@ -1,5 +1,5 @@
 import { FaBookOpen, FaUsers } from 'react-icons/fa'
-import {BsGraphDown} from 'react-icons/bs'
+import { BsGraphDown } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 const AdminNav = () => {
   return (
@@ -25,7 +25,6 @@ const AdminNav = () => {
           </li>
         </Link>
       </ul>
-      <button className='adminBtn logout'>Logout</button>
     </nav>
   )
 }

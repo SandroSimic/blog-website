@@ -36,16 +36,16 @@ export const BlogContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(blogReducer, initialState)
 
 
-
   const fetchAllBlogs = async (sortOrder) => {
-    dispatch({ type: "FETCH_ALL_BLOGS", payload: [], isLoading: true });
+
+    dispatch({ type: "FETCH_ALL_BLOGS", isLoading: true });
     try {
       const response = await axios.get(`${baseUrl}/blogs/?sortOrder=${sortOrder}`);
-      const data = response.data;
+      const data = await response.data;
       dispatch({ type: "FETCH_ALL_BLOGS", payload: data, isLoading: false });
     } catch (error) {
-      toast.info(error.request.response);
-      dispatch({ type: "FETCH_ALL_BLOGS", payload: [], isLoading: false });
+      toast.info(error);
+      dispatch({ type: "FETCH_ALL_BLOGS", isLoading: false });
     }
   }
 
@@ -69,19 +69,17 @@ export const BlogContextProvider = ({ children }) => {
         },
         withCredentials: true
       })
-
+      console.log(response);
       if (response.status === 201) {
         fetchAllBlogs();
         toast.success("Blog Created Successfully");
 
       } else {
         console.error("Failed to create blog:", response);
-        toast.error("An error occurred while creating the blog.");
       }
 
     } catch (error) {
-      console.error(error.message);
-      toast.error('An error occurred while creating the blog.');
+      console.error(error);
     }
   }
 
@@ -159,13 +157,13 @@ export const BlogContextProvider = ({ children }) => {
     }
   }
 
- 
+
 
 
 
   return (
     <BlogContext.Provider
-      value={{ ...state, fetchAllBlogs, fetchSingleBlog, createBlog, deleteBlog, updateBlog, getUserBlogs, likeBlog,  }}
+      value={{ ...state, fetchAllBlogs, fetchSingleBlog, createBlog, deleteBlog, updateBlog, getUserBlogs, likeBlog, }}
     >
       {children}
     </BlogContext.Provider>

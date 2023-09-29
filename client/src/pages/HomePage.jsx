@@ -16,10 +16,12 @@ const HomePage = () => {
   useEffect(() => {
     if (sortOrder !== "default") {
       const fetchBlogs = async () => {
+
         await fetchAllBlogs(sortOrder);
       }
       fetchBlogs();
     }
+
   }, [sortOrder]);
 
 
@@ -38,9 +40,12 @@ const HomePage = () => {
     setCurrentPage(pageNumber);
   };
 
+
+
   if (!Array.isArray(blogData)) {
     blogData = [];
   }
+
 
   // get current blogs
   const indexOfLastBlog = currentPage * blogsPerPage;

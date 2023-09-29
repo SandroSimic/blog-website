@@ -27,15 +27,6 @@ const blogSchema = new mongoose.Schema(
         ref: "User"
       }
     ],
-    comments: [
-      {
-        comment: String,
-        author: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'User'
-        }
-      }
-    ]
   },
   {
     timestamps: true,

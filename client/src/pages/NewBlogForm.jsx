@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useBlogContext } from "../context/BlogContext"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 
 const NewBlogForm = () => {
@@ -23,6 +24,10 @@ const NewBlogForm = () => {
 
 
     await createBlog(formData);
+
+    if (!title || !content || !fileName) {
+      return toast.error("All fields have to be filled")
+    }
 
     setTimeout(() => {
       navigate('/')

@@ -7,12 +7,9 @@ import Blog from "../models/blogModel.js";
 
 
 
-const maxAge = 3 * 24 * 60 * 60
 
 export const registerUser = asyncHandler(async (req, res) => {
 
-    console.log(req.file)
-    console.log(req.body)
 
     const { username, email, password } = req.body
 
@@ -55,6 +52,7 @@ export const loginUser = asyncHandler(async (req, res) => {
             },)
 
             res.json(user)
+            console.log(user);
         } else {
             throw Error('Incorrect email or password')
         }
@@ -144,3 +142,21 @@ export const getUserBookmarkedBlogs = asyncHandler(async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 })
+
+export const deleteUser = asyncHandler(async (req, res) => {
+    const userId = req.params.userId
+
+
+    const user = await User.findById(userId)
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" })
+    }
+
+    await Blog.deleteMany({ creator: userId })
+
+    await User.findByIdAndDelete(userId)
+
+    res.status(200).json({ message: "User and associated blogs deleted" })
+})
+

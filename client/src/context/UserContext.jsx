@@ -47,8 +47,6 @@ const userReducer = (state, action) => {
 export const UserContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(userReducer, initialState)
 
-
-    // Initialize user data from local storage on component mount
     useEffect(() => {
         const userData = localStorage.getItem("user");
         if (userData) {
@@ -58,7 +56,7 @@ export const UserContextProvider = ({ children }) => {
 
     const registerUser = async (formData) => {
         try {
-            const response = await axios.post(`${baseUrl}/users/register`, formData, {
+            await axios.post(`${baseUrl}/users/register`, formData, {
                 headers: {
                     'Content-Type': "multipart/form-data"
                 },

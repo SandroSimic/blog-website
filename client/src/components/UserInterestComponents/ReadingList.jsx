@@ -15,7 +15,7 @@ const ReadingList = ({ blog }) => {
           </Link>
         </h1>
         <p>
-          {blog.content}
+          {blog.content.slice(0, 50) + "..."}
         </p>
       </div>
       <div className="readingList__image">

@@ -20,7 +20,7 @@ const checkUser = async (req, res, next) => {
         }
 
         req.user = user;
-        console.log(user)
+        console.log("User check:" + user)
 
         return next();
     } catch (err) {

@@ -4,29 +4,39 @@
   gap: 5rem;
   margin-top: 5rem;
 
+  @media only screen and (max-width: $bp-large) {
+    gap: 3rem;
+    margin-top: 3rem;
+  }
+
   a {
     text-decoration: none;
     color: var(--primary-color);
     font-size: 2rem;
+
+    @media only screen and (max-width: $bp-large) {
+      font-size: 1.6rem;
+    }
+
   }
 
   &__info {
+    width: 20rem;
     display: flex;
     flex-direction: column;
+    gap: 3rem;
 
-    h1 {
-      color: var(--primary-color);
-      font-size: 1.6rem;
-
-      &:hover {
-        cursor: pointer;
-      }
+    @media only screen and (max-width: $bp-large) {
+      width: 100%;
     }
+
 
     & p {
       color: var(--gray-color);
-      font-size: 1.6rem;
-      margin-top: 1rem;
+
+      @media only screen and (max-width: $bp-large) {
+        display: none;
+      }
     }
   }
 

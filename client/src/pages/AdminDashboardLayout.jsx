@@ -23,10 +23,10 @@ const AdminDashboardLayout = () => {
 
             <main className="admin-main">
                 <Link to={'/admin-dashboard/users'}>
-                    <AdminBox count={users.length} name={"Users"} icon={<BsFillPeopleFill />} />
+                    <AdminBox count={users?.length} name={"Users"} icon={<BsFillPeopleFill />} />
                 </Link>
                 <Link to={'/admin-dashboard/blogs'}>
-                    <AdminBox count={blogData.length} name={"Blogs"} icon={<FaBookOpen />} />
+                    <AdminBox count={blogData?.length} name={"Blogs"} icon={<FaBookOpen />} />
                 </Link>
             </main>
 
