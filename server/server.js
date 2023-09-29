@@ -1,5 +1,6 @@
 import express from "express"
-import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import morgan from "morgan"
@@ -20,7 +21,8 @@ app.use(cookieParser())
 
 
 
-const __dirname = path.resolve()
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 
 
@@ -28,9 +30,7 @@ const __dirname = path.resolve()
 app.use(cors({ credentials: true, origin: ['http://127.0.0.1:5173', "https://reader-frontend-k8t2.onrender.com"] }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use("/uploads", express.static(path.join(__dirname, '/uploads')));
-
-
+app.use("/uploads", express.static(__dirname + "/uploads"));
 
 
 app.use(morgan("dev"))
