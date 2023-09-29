@@ -40,7 +40,7 @@ function App() {
   const [socket, setSocket] = useState(null)
 
   useEffect(() => {
-    setSocket(io('http://localhost:8000'))
+    setSocket(io('https://render-api-jnwd.onrender.com'))
   }, [])
 
   useEffect(() => {

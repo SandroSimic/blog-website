@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 
 const ReadingList = ({ blog }) => {
-  const imageUrl = `http://localhost:8000/${blog.image}`;
+  const imageUrl = `https://render-api-jnwd.onrender.com/${blog.image}`;
 
 
 
