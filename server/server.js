@@ -52,7 +52,7 @@ const server = app.listen(process.env.PORT, (req, res) => {
 
 const io = new Server(server, {
   cors: {
-    origin: "http://127.0.0.1:5173"
+    origin: "https://blog-website-smoky-phi.vercel.app"
   }
 })
 
