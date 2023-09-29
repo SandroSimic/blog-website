@@ -40,7 +40,7 @@ function App() {
   const [socket, setSocket] = useState(null)
 
   useEffect(() => {
-    setSocket(io('https://reader-j6tn.onrender.com'))
+    setSocket(io('http://localhost:8000'))
   }, [])
 
   useEffect(() => {

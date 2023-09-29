@@ -28,7 +28,7 @@ const Profile = ({ userId }) => {
 
     const user = users.user;
 
-    const imageUrl = user ? `https://reader-j6tn.onrender.com/${users.user.image}` : '';
+    const imageUrl = user ? `http://localhost:8000/${users.user.image}` : '';
 
     return (
         <div className="profile">
@@ -48,7 +48,7 @@ const Profile = ({ userId }) => {
                     <div key={blog._id}>
                         <Link to={`/blog/${blog._id}`}>
                             <div className="profile__blog">
-                                <img src={`https://reader-j6tn.onrender.com/${blog.image}`} alt={blog.title} />
+                                <img src={`http://localhost:8000/${blog.image}`} alt={blog.title} />
                                 <div className="heading">
                                     <AiFillRead className="icon" />
                                     <h2 >{blog.title}</h2>

@@ -124,7 +124,7 @@ const BlogDetailPage = ({ socket }) => {
           </div>
           <div className='blogDetail__info'>
             <div className='blogDetail__info__imgDiv'>
-              <img src={`https://reader-j6tn.onrender.com/${blogData.image}`} alt={blogData.title} />
+              <img src={`http://localhost:8000/${blogData.image}`} alt={blogData.title} />
             </div>
             <div className='blogDetail__info--text'>
               <h3><span>Creator:</span> <Link to={`/profile/${creatorId}`}>{creatorUsername}</Link></h3>
